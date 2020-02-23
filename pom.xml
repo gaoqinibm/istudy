@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.study</groupId>
+    <artifactId>istudy</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <description>整理分享</description>
+
+    <developers>
+        <developer>
+            <id>HELLO WORLD</id>
+            <name>Gaoqs</name>
+            <organization>WORLD</organization>
+        </developer>
+    </developers>
+    <modules>
+        <module>istudy-redis</module>
+        <module>istudy-dubbo</module>
+        <module>istudy-cloud</module>
+        <module>istudy-zookeeper</module>
+        <module>istudy-elasticsearch</module>
+        <module>istudy-nacos</module>
+        <module>istudy-jvm</module>
+        <module>istudy-other</module>
+        <module>istudy-mysql</module>
+        <module>istudy-tomcat</module>
+        <module>istudy-docker</module>
+        <module>istudy-spring</module>
+        <module>istudy-springboot</module>
+        <module>istudy-springmvc</module>
+        <module>istudy-mybatis</module>
+        <module>istudy-rocketmq</module>
+        <module>istudy-rabbitmq</module>
+        <module>istudy-netty</module>
+        <module>istudy-big-data</module>
+        <module>istudy-k8s</module>
+        <module>istudy-quartz</module>
+<!--        <module>架构方向</module>-->
+<!--        <module>设计模式</module>-->
+<!--        <module>配置中心</module>-->
+    </modules>
+
+    <properties>
+        <skip_maven_deploy>false</skip_maven_deploy>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+    </dependencies>
+
+    <build>
+        <finalName>istudy</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
