@@ -1,4 +1,4 @@
-#ThreadLocal
+##ThreadLocal
     ThreadLocal提供一个线程（Thread）局部变量，访问到某个变量的每一个线程都拥有自己的局部变量。说白了，ThreadLocal就是想在多线程环境下去保证成员变量的安全。
 
 ##使用场景
