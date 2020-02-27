@@ -1,5 +1,9 @@
 ## hashMap 概述
     HashMap存储的是key-value的键值对，允许key为null，也允许value为null。HashMap内部为数组+链表的结构，会根据key的hashCode值来确定数组的索引(确认放在哪个桶里)，如果遇到索引相同的key，桶的大小是2，如果一个key的hashCode是7，一个key的hashCode是3，那么他们就会被分到一个桶中(hash冲突)，如果发生hash冲突，HashMap会将同一个桶中的数据以链表的形式存储，但是如果发生hash冲突的概率比较高，就会导致同一个桶中的链表长度过长，遍历效率降低，所以在JDK1.8中如果链表长度到达阀值(默认是8)，就会将链表转换成红黑二叉树。
+
+## HashMap数据结构
+![Alt text](../hashMap/hashmap数据结构.png)
+
 ## 存储结构key,value
 ### 确定哈希桶数据索引位置
     static final int hash(Object key) {
