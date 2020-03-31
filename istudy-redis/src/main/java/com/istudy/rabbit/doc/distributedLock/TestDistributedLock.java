@@ -1,4 +1,4 @@
-package com.istudy.redis.doc.distributedLock;
+package com.istudy.rabbit.doc.distributedLock;
 
 /**
  * @Description: TODO
