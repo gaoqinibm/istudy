@@ -35,11 +35,8 @@ public class Test {
     static {
         // HBase配置文件
         conf = HBaseConfiguration.create();
-        //conf.set("hbase.zookeeper.quorum", "192.168.40.215");
-//        conf.set("hbase.zookeeper.quorum", "192.168.40.215");
-//        conf.set("hbase.zookeeper.property.clientPort", "2181");
-        conf.set("hbase.zookeeper.quorum", "192.168.40.215:16000");
-        //conf.set("hbase.zookeeper.quorum", "192.168.40.215:16010");
+        conf.set("hbase.zookeeper.quorum", "hbaseserver");
+        conf.set("hbase.zookeeper.property.clientPort", "2181");
 
         // 获取连接对象
         try {
@@ -69,10 +66,10 @@ public class Test {
 
     // 创建表
     public static void createTable(String tableName, String... cfs) throws IOException {
-//        if (tableExist(tableName)) {
-//            System.out.println("表已存在");
-//            return;
-//        }
+        if (tableExist(tableName)) {
+            System.out.println("表已存在");
+            return;
+        }
         // cfs是列族，官方建议一个表一个，但可以有多个
         // 创建表描述器
         HTableDescriptor hTableDescriptor = new HTableDescriptor(TableName.valueOf(tableName));
@@ -186,7 +183,7 @@ public class Test {
 //      scanTable("student");
 
         //查——获取指定列族
-        getData("student", "1001", "info", "name");
+        //getData("student", "1001", "info", "name");
 
         // 关闭资源
         close(connection, admin);
