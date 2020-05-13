@@ -41,6 +41,7 @@
         <module>istudy-quartz</module>
         <module>istudy-java-base</module>
         <module>istudy-hbase</module>
+        <module>istudy-common</module>
         <!--        <module>架构方向</module>-->
 <!--        <module>设计模式</module>-->
 <!--        <module>配置中心</module>-->
