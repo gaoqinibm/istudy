@@ -3,7 +3,7 @@
 
 ### 听说，打赏我的人最后都找到了真爱。
 
-![Alt text](istudy-other/支付宝二维码.png)
+![Alt text](istudy-other/image.png)
 
     【备忘录】Sublime Text编辑器如何在选中的多行行首及行尾增加字符串
     操作步骤如下：
