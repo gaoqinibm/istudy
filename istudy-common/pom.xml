@@ -17,6 +17,12 @@
             <artifactId>spring-core</artifactId>
             <version>5.2.6.RELEASE</version>
         </dependency>
+
+        <dependency>
+            <groupId>ma.glasnost.orika</groupId>
+            <artifactId>orika-core</artifactId>
+            <version>1.5.4</version>
+        </dependency>
     </dependencies>
 
 
