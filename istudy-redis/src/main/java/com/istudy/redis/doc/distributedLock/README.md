@@ -1,10 +1,10 @@
 ## redis分布式锁过期时间到了业务没执行完问题
     Redis锁的过期时间小于业务的执行时间该如何续期？
     Redis分布式锁比较正确的姿势是采用redisson这个客户端工具
-![Alt text](../distributedLock/redis分布式锁.jpg)
+![Alt text](redis分布式锁.jpg)
 
     默认情况下,加锁的时间是30秒.如果加锁的业务没有执行完,那么到 30-10 = 20秒的时候,就会进行一次续期,把锁重置成30秒.那这个时候可能又有同学问了,那业务的机器万一宕机了呢?宕机了定时任务跑不了,就续不了期,那自然30秒之后锁就解开了呗.
-![Alt text](../distributedLock/Redisson分布式锁的底层原理.jpg)
+![Alt text](Redisson分布式锁的底层原理.jpg)
     
     
 ## redis使用jedis和redisssion实现分布式锁
