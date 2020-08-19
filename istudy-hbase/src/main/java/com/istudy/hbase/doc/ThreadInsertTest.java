@@ -14,10 +14,10 @@ public class ThreadInsertTest extends Thread {
 
     @Override
     public void run() {
-        String url = "jdbc:mysql://127.0.0.1:3306/ps_test?useSSL=false&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true";
+        String url = "jdbc:mysql://192.168.40.114:3306/data_verify?useSSL=false&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true";
         String name = "com.mysql.jdbc.Driver";
         String user = "root";
-        String password = "123456";
+        String password = "123456789";
         Connection conn = null;
         try {
             Class.forName(name);
@@ -78,7 +78,7 @@ public class ThreadInsertTest extends Thread {
     }
 
     public static void main(String[] args) {
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= 20; i++) {
             new ThreadInsertTest().start();
         }
     }
