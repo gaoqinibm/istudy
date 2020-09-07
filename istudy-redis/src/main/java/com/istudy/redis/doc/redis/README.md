@@ -9,7 +9,7 @@
     1.速度快，因为数据存在内存中，类似于HashMap，HashMap的优势就是查找和操作的时间复杂度都是O(1)
     2. 支持丰富数据类型，支持string，list，set，sorted set，hash
     3.支持事务，操作都是原子性，所谓的原子性就是对数据的更改要么全部执行，要么全部不执行
-    4. 丰富的特性：可用于缓存，消息，按key设置过期时间，过期后将会自动删除如何解决redis的并发竞争key问题
+    4.丰富的特性：可用于缓存，消息，按key设置过期时间，过期后将会自动删除如何解决redis的并发竞争key问题
 
 ## redis为什么那么快
     (一)纯内存操作
@@ -135,3 +135,44 @@
     Redis是采用TCP连接的，连接TCP的socket在所有数据准备好之前，socket不可用。请求是进来了，数据包还不完整，所以还不能处理这个请求。
     那么对于已经准备数据包的socket，Redis线程可以一次性这些请求都接收来，然后去内存处理。都处理完后，将结果再都带回到socket。接下来再去处理准备好的socket。
     所以redis的多路复用，不是每一个请求处理一次，而是一次处理多个请求。所以纯内存操作的单线程，效率也很高。
+
+## Q&A
+    如果一个线程获得了分布式锁，但service还没执行完，这个时候分布式锁在redis中过期了，这种情况解决有什么思路？
+    分布式锁过期了，解决方案当然就是续期啦。那么应该怎么续期呢？
+    
+    思路一：任务执行的时候，开辟一个守护线程，在守护线程中每隔一段时间重新设置过期时间。
+    思路二：通过Redisson中的看门狗来实现。
+    
+    @Component
+    public class RedisTool {
+        @Autowired
+        private StringRedisTemplate stringRedisTemplate;
+        @Autowired
+        private RedissonClient redisson;
+        /**
+         * 模拟购买场景，购买一个，将redis中对应的数量减少一个
+         */
+        public void reduceOne(){
+            String key = "num";
+            String lockKey = "lockKey";
+            RLock lock = redisson.getLock( lockKey );
+            try{
+                lock.lock();
+                //获取redis中的数量
+                String value = stringRedisTemplate.opsForValue().get( key );
+                //如果当前数量>0,则能够购买，并且将减一后的结果塞回redis
+                if(Integer.valueOf( value )>0){
+                    int num = Integer.valueOf( value ) - 1;
+                    System.out.println("消费1个商品，还剩："+num+"个");
+                    stringRedisTemplate.opsForValue().set( key,String.valueOf( num ) );
+                }else {
+                    System.out.println("商品已经卖完...");
+                }
+            }finally {
+                lock.unlock();
+            }
+        }
+    }
+    
+## Redisson的工作原理
+![Alt text](Redisson的工作原理.png)
