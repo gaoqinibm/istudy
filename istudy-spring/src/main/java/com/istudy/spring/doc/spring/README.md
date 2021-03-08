@@ -52,3 +52,5 @@
     生命周期
     InitializingBean
     DisposableBean
+
+## 循环依赖
