@@ -28,3 +28,13 @@
     -XX:+ UseCMSCompactAtFullCollection Full GC 后，进行一次碎片整理；整理过程是独占的，会引起停顿时间变长 
     -XX:+CMSFullGCsBeforeCompaction 设置进行几次 Full GC 后，进行一次碎片整理 
     -XX:ParallelCMSThreads 设定 CMS 的线程数量（一般情况约等于可用 CPU 数量）
+    
+## G1 如何做到可预测的停顿
+    G1中有一个Remembered Sets，简称RSets，每一个region都存在的一个RSets，用来记录哪一个区引用了该区(因此，在minor GC时，也可以根据RSets来扫描老年代中有引用哪些新生代的对象，避免扫描整个老年代)；
+    还有一个Collection Sets，简称CSets，记录了等待回收的region区，GC时，这些region区里面的对象会被回收。
+
+## 3.1 停顿时间模型
+    停顿时间模型（Pause Prediction Model）：指定在一个长度为 M 毫秒的时间片段内，消耗在垃圾收集上的时间大概率不超过 N 毫秒。
+    G1 收集器之所以能建立可预测的停顿时间模型，是因为它将 Region 作为单次回收的最小单元（每次收集到的内存空间都是 Region 大小的整数倍），这样可以有计划地避免整个 Java 堆进行全区域垃圾收集。
+    更具体的处理思路：让 G1 收集器去跟踪各个 Region 中的垃圾堆积的“价值”大小，然后在后台维护一个优先级列表，每次根据用户设定的收集停顿时间，优先处理回收价值收益最大的那些 Region（这就是“Garbage First”名字的由来）。
+    * “价值”的衡量指标是：每次回收所获得的空间大小以及回收所需时间的经验值。
