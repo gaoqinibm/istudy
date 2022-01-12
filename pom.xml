@@ -36,7 +36,6 @@
         <module>istudy-rocketmq</module>
         <module>istudy-rabbitmq</module>
         <module>istudy-netty</module>
-        <module>istudy-big-data</module>
         <module>istudy-k8s</module>
         <module>istudy-quartz</module>
         <module>istudy-java-base</module>
