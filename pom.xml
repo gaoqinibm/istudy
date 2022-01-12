@@ -46,6 +46,7 @@
         <module>istudy-hadoop</module>
         <module>架构方向</module>
         <module>istudy-clickhouse</module>
+        <module>istudy-spark</module>
         <!--        <module>设计模式</module>-->
 <!--        <module>配置中心</module>-->
     </modules>
