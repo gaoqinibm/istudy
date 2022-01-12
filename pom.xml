@@ -37,7 +37,6 @@
         <module>istudy-rabbitmq</module>
         <module>istudy-netty</module>
         <module>istudy-k8s</module>
-        <module>istudy-quartz</module>
         <module>istudy-java-base</module>
         <module>istudy-hbase</module>
         <module>istudy-common</module>
