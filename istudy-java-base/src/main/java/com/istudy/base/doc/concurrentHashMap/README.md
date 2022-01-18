@@ -7,10 +7,10 @@
 
 
 ## ConcurrentHashMap为什么高效？
-    Hashtable低效主要是因为所有访问Hashtable的线程都争夺一把锁。如果容器有很多把锁，每一把锁控制容器中的一部分数据，那么当多个线程访问容器里的不同部分的数据时，线程之前就
-    不会存在锁的竞争，这样就可以有效的提高并发的访问效率。
-    这也正是ConcurrentHashMap使用的分段锁技术。将ConcurrentHashMap容器的数据分段存储，每一段数据分配一个Segment（锁），当线程占用其中一个Segment时，其他线程可正常访问
-    其他段数据。
+    Hashtable低效主要是因为所有访问Hashtable的线程都争夺一把锁。如果容器有很多把锁，每一把锁控制容器中的一部分数据，
+    那么当多个线程访问容器里的不同部分的数据时，线程之前就不会存在锁的竞争，这样就可以有效的提高并发的访问效率。
+    这也正是ConcurrentHashMap使用的分段锁技术。将ConcurrentHashMap容器的数据分段存储，每一段数据分配一个Segment（锁），
+    当线程占用其中一个Segment时，其他线程可正常访问其他段数据。
 
 ## CAS原理
     CAS（Compare and Swap）, 翻译成比较并交换。

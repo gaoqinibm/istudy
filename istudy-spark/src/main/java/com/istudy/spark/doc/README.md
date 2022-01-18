@@ -7,8 +7,11 @@
 弹性分布式数据集 Resilient Distributed Datasets，是MapReduce模型的扩展和延伸。
 
 ## OLAP和OLTP
-* OLAP：On-Line Analytical Processing，联机分析处理。OLAP是数据仓库系统的主要应用，支持复杂的分析操作，侧重决策支持，并且提供直观易懂的查询结果。通俗的讲，就是对数据按不同维度的聚合，维度的上钻，下卷等
-* OLTP：On-line Transaction Processing，联机事务处理。传统的关系型数据库的主要应用，主要是基本的、日常的事务处理，例如银行交易。通俗的讲，就是对数据的增删改查等操作
+* OLAP：On-Line Analytical Processing，联机分析处理。OLAP是数据仓库系统的主要应用，
+支持复杂的分析操作，侧重决策支持，并且提供直观易懂的查询结果。通俗的讲，就是对数据按不同维度的聚合，维度的上钻，下卷等
+
+* OLTP：On-line Transaction Processing，联机事务处理。传统的关系型数据库的主要应用，主要是基本的、日常的事务处理，
+例如银行交易。通俗的讲，就是对数据的增删改查等操作
 
 ## spark逻辑执行流程
 
