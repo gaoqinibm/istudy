@@ -19,5 +19,5 @@
     得恢复原先部署架构，重新用原先的consumer机器来消费消息；
 
 ### RabbitMQ的消息丢失解决方案？
-    消息持久化：Exchange 设置持久化：durable:true；Queue 设置持久化；Message持久化发送。
+    消息持久化：Exchange设置持久化：durable:true；Queue设置持久化；Message持久化发送。
     ACK确认机制：消息发送确认；消息接收手动确认ACK。

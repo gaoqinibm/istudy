@@ -88,7 +88,10 @@
     IO多路复用技术详解
     　　IO多路复用：I/O是指网络I/O,多路指多个TCP连接(即socket或者channel）,复用指复用一个或几个线程。
     意思说一个或一组线程处理多个TCP连接。最大优势是减少系统开销小，不必创建过多的进程/线程，也不必维护这些进程/线程。
-    　　IO多路复用使用两个系统调用(select/poll/epoll和recvfrom)，blocking IO只调用了recvfrom；select/poll/epoll 核心是可以同时处理多个connection，而不是更快，所以连接数不高的话，性能不一定比多线程+阻塞IO好,多路复用模型中，每一个socket，设置为non-blocking,阻塞是被select这个函数block，而不是被socket阻塞的。
+    
+    　　IO多路复用使用两个系统调用(select/poll/epoll和recvfrom)，blocking IO只调用了recvfrom；select/poll/epoll
+    核心是可以同时处理多个connection，而不是更快，所以连接数不高的话，性能不一定比多线程+阻塞IO好,多路复用模型中，每一个socket，
+    设置为non-blocking,阻塞是被select这个函数block，而不是被socket阻塞的。
     
     select机制
     基本原理：
@@ -114,10 +117,10 @@
     　　效率提高，使用回调通知而不是轮询的方式，不会随着FD数目的增加效率下降
     　　内核和用户空间mmap同一块内存实现(mmap是一种内存映射文件的方法，即将一个文件或者其它对象映射到进程的地址空间)
     
-    例子：100万个连接，里面有1万个连接是活跃，我们可以对比 select、poll、epoll 的性能表现
+    例子：100万个连接，里面有1万个连接是活跃，我们可以对比select、poll、epoll 的性能表现
     　　select：不修改宏定义默认是1024,l则需要100w/1024=977个进程才可以支持 100万连接，会使得CPU性能特别的差。
-    　　poll：    没有最大文件描述符限制,100万个链接则需要100w个fd，遍历都响应不过来了，还有空间的拷贝消耗大量的资源。
-    　　epoll:    请求进来时就创建fd并绑定一个callback，主需要遍历1w个活跃连接的callback即可，即高效又不用内存拷贝。
+    　　poll：没有最大文件描述符限制,100万个链接则需要100w个fd，遍历都响应不过来了，还有空间的拷贝消耗大量的资源。
+    　　epoll: 请求进来时就创建fd并绑定一个callback，主需要遍历1w个活跃连接的callback即可，即高效又不用内存拷贝。
 
 
 ## 缓存击穿，缓存穿透，缓存雪崩？何如避免？

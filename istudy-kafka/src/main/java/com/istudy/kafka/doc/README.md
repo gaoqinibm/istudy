@@ -6,13 +6,16 @@
     Producer ：消息生产者，就是向kafka broker发消息的客户端。
     Consumer ：消息消费者，向kafka broker取消息的客户端。
     Topic ：可以理解为一个队列，一个Topic又分为一个或多个分区，
-    Consumer Group：这是kafka用来实现一个topic消息的广播（发给所有的consumer）和单播（发给任意一个consumer）的手段。一个topic可以有多个Consumer Group。
+    Consumer Group：这是kafka用来实现一个topic消息的广播（发给所有的consumer）和单播（发给任意一个consumer）的手段。
+    一个topic可以有多个Consumer Group。
+    
     Broker ：一台kafka服务器就是一个broker。一个集群由多个broker组成。一个broker可以容纳多个topic。
     Partition：为了实现扩展性，一个非常大的topic可以分布到多个broker上，每个partition是一个有序的队列。
-    partition 中的每条消息都会被分配一个有序的id（offset）。将消息发给consumer，kafka只保证按一个partition中的消息的顺序，不保证一个topic的整体（多个partition间）的顺序。
+    partition中的每条消息都会被分配一个有序的id（offset）。将消息发给consumer，kafka只保证按一个partition中的消息的顺序，
+    不保证一个topic的整体（多个partition间）的顺序。
     
-    Offset：kafka 的存储文件都是按照offset.kafka 来命名，用offset做名字的好处是方便查找。
-    例如你想找位于2049 的位置，只要找到2048.kafka的文件即可。当然the first offset就是 00000000000.kafka。
+    Offset：kafka的存储文件都是按照offset.kafka来命名，用offset做名字的好处是方便查找。
+    例如你想找位于2049的位置，只要找到2048.kafka的文件即可。当然the first offset就是00000000000.kafka。
 
 ### kafka分区的目的
     分区对于Kafka集群的好处是：实现负载均衡。分区对于消费者来说，可以提高并发度，提高效率。
@@ -53,7 +56,7 @@
     0:生产者只要把消息发送出去即可，不用等待broker的处理结果，吞吐量最高，同样消息的丢失率也最高。
     1:生成者需要等分区leader将消息写入成功后 才认为此消息发送成功，1是ack的默认配置，
     兼顾了吞吐量和消息丢失的问题，但是同样有消息丢失的风险，比如当leader写入成功后突然挂了，
-    其他分区跟随者并为能够将此消息同步，则此消息丢失。
+    其他分区跟随者并未能够将此消息同步，则此消息丢失。
     
     all:生产者会等待所有的副本都写入成功后才认为此消息发送成功，此方法保证了消息不丢失，但也是吞吐量最低的。
     
