@@ -2,17 +2,19 @@
 ### mysql与clickhouse的字段类型对应表
 ![Alt text](../doc/字段类型对比.png)
 
-### clickhouse 数据类型
+### clickhouse数据类型
     数据类型没有boolean其他基本和hive一样,详细的看官网 https://clickhouse.tech/docs/en/sql-reference/data-types/int-uint/
 
-### clickhouse 引擎
+### clickhouse引擎
     clickhouse有很多引擎,最常用的是MergeTree家族 还有Distributed引擎
 
 ### clickhouse 创建表
 > clickhouse可以创建本地表,分布式表,集群表
 
     create table test()为本地表
+    
     CREATE TABLE image_label_all AS image_label ENGINE = Distributed(distable, monchickey, image_label, rand()) 分布式表
+    
     create table test on cluster()为集群表
     
     建表语句,使用ReplicatedMergeTree引擎
@@ -26,6 +28,17 @@
     quartly String
     ) ENGINE = ReplicatedMergeTree('/clickhouse/tables/metro/metro_mdw_pcg', '{replica}') PARTITION BY (quartly, pcg_main_cat_id) 
     ORDER BY (storekey, custkey, cardholderkey)
+    
+    ReplacingMergeTree引擎，可以针对相同主键的数据进行去重，它能够在合并分区时删除重复的数据。常使用这种引擎实现真正存储数据, 由于是分布式建表的, 数据分布在集群的各个机器中, 直接查表数据查不全, 所以要用到Distributed。
+    Distributed相当于视图, 不真正存储数据, 用来查数据, 速度快、数据全。
+    Distributed表引擎是分布式表的代名词，它自身不存储任何数据，数据都分散存储在某一个分片上，能够自动路由数据至集群中的各个节点，所以Distributed表引擎需要和其他数据表引擎一起协同工作。
+    
+    Distributed(cluster_name,database_name,table_name[,sharding_key])
+    各个参数的含义分别如下：
+    cluster_name：集群名称，与集群配置中的自定义名称相对应。
+    database_name：数据库名称
+    table_name：表名称
+    sharding_key：可选的，用于分片的key值，在数据写入的过程中，分布式表会依据分片key的规则，将数据分布到各个节点的本地表。
     
 ### clickhouse数据操作
     增加可以使用insert;
@@ -51,7 +64,7 @@
     
 ### 数据查询
     clickhouse的查询sql表单查询基本和标准sql一样,也支持limit分页,但是inner join的查询写法不一样,而且我用4亿+2000万inner join的速度很慢
-    两个sql对比inner join要花费将近一分钟,使用in子查询仅3秒,建议都使用in查询,clickhouse的单表查询速度很快,3亿数据count distinct 仅1秒左右
+    两个sql对比inner join要花费将近一分钟,使用in子查询仅3秒,建议都使用in查询,clickhouse的单表查询速度很快,3亿数据count distinct仅1秒左右
     
 ### clickhouseSQL语法
 > CREATE
@@ -165,7 +178,7 @@
     4，尽量做1000条以上批量的写入，避免逐行insert或小批量的insert操作，因为ClickHouse底层会不断的做异步的数据合并，会影响查询性能，这个在做实时数据写入的时候要尽量避开；
     5，Clickhouse快是因为采用了并行处理机制，即使一个查询，也会用服务器一半的CPU去执行，所以ClickHouse不能支持高并发的使用场景，默认单查询使用CPU核数为服务器核数的一半，安装时会自动识别服务器核数，可以通过配置文件修改该参数。
     全量数据导入：数据导入临时表 -> 导入完成后，将原表改名为tmp1 -> 将临时表改名为正式表 -> 删除原表
-    增量数据导入： 增量数据导入临时表 -> 将原数据除增量外的也导入临时表 -> 导入完成后，将原表改名为tmp1-> 将临时表改成正式表-> 删除原数据表
+    增量数据导入：增量数据导入临时表 -> 将原数据除增量外的也导入临时表 -> 导入完成后，将原表改名为tmp1-> 将临时表改成正式表-> 删除原数据表
     6，只支持自己的协议（没有MySQL协议支持）
     
 ### clickhouse有哪些特性？
