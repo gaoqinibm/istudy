@@ -1,6 +1,7 @@
 ## concurrentHashMap
     Java并发包中提供的一个线程安全且高效的HashMap实现，可以完全替代HashTable，在并发编程的场景中使用频率非常之高。
     可能大多人只是知道它使用了多个锁代替HashTable中的单个锁，也就是锁分离技术（Lock Stripping）
+
 ## concurrentHashMap数据结构
     ConcurrentHashMap相比HashMap而言，是多线程安全的，其底层数据与HashMap的数据结构相同，数据结构如下:
 ![Alt text](../concurrentHashMap/数据结构.png)
