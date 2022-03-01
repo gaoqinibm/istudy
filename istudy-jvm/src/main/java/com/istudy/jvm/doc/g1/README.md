@@ -8,7 +8,7 @@
     特点：
        - 空间整合：G1收集器采用标记整理算法，不会产生内存空间碎片。分配大对象时不会因为无法找到连续空间而提前触发下一次GC。
        - 可预测的停顿：降低停顿时间是G1和CMS的共同关注点，但G1除了追求低停顿外，还能建立可预测的停顿时间模型，
-    能让使用者明确指定在一个长度为N毫秒的时间片段内，消耗在垃圾收集上的时间不得超过N毫秒，这几乎已经是实时Java（RTSJ）的垃圾收集器的特征了。
+    能让使用者明确指定在一个长度为N毫秒的时间片段内，消耗在垃圾收集上的时间不得超过M毫秒，这几乎已经是实时Java（RTSJ）的垃圾收集器的特征了。
        - G1搜集器，Java堆的内存布局与其他收集器有很大差别，它将整个Java堆划分为多个大小相等的独立区域（Region），
     虽然还保留有新生代和老年代的概念，但新生代和老年代不再是物理隔阂了，它们都是一部分（可以不连续）Region的集合。
 ![Alt text](../g1/G1.png)
@@ -34,7 +34,7 @@
     参数配置：
     -XX:+UseConcMarkSweepGC 使用 CMS 收集器 
     -XX:+ UseCMSCompactAtFullCollection Full GC 后，进行一次碎片整理；整理过程是独占的，会引起停顿时间变长 
-    -XX:+CMSFullGCsBeforeCompaction 设置进行几次 Full GC 后，进行一次碎片整理 
+    -XX:+CMSFullGCsBeforeCompaction 设置进行几次Full GC后，进行一次碎片整理 
     -XX:ParallelCMSThreads 设定CMS的线程数量（一般情况约等于可用 CPU 数量）
     
 ## G1如何做到可预测的停顿
