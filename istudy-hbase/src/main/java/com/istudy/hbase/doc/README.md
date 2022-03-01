@@ -51,3 +51,33 @@ BlockCache：HBase会将一次文件查找的Block块缓存到Cache中，以便�
     必须在设计上保证其唯一性，rowkey是按照字典顺序排序存储的，因此，设计rowkey的时候，要充分利用这个排序的特点，将经常读取的数据存储到一块，将最近可能会被访问的数据放到一块。
     
 ## HBase的高并发和实时处理数据
+
+## HBase读取数据流程
+![Alt text](../doc/HBase读取数据流程.png)
+    
+    Client先访问zookeeper，从meta表读取region的位置，然后读取meta表中的数据。meta中又存储了用户表的region信息；
+    根据namespace、表名和rowkey在meta表中找到对应的region信息；
+    找到这个region对应的regionserver；
+    查找对应的region；
+    先从MemStore找数据，如果没有，再到BlockCache里面读；
+    BlockCache还没有，再到StoreFile上读(为了读取的效率)；
+    如果是从StoreFile里面读取的数据，不是直接返回给客户端，而是先写入BlockCache，再返回给客户端。
+
+## HBase写入数据流程
+![Alt text](../doc/HBase写入数据流程.png)
+    
+    Client向HregionServer发送写请求；
+    HregionServer将数据写到HLog（write ahead log）。为了数据的持久化和恢复；
+    HregionServer将数据写到内存（MemStore）；
+    反馈Client写成功。
+
+## 数据flush过程
+    当MemStore数据达到阈值（默认是128M，老版本是64M），将数据刷到硬盘，将内存中的数据删除，同时删除HLog中的历史数据；
+    并将数据存储到HDFS中
+    
+## 数据合并过程
+    当数据块达到4块，Hmaster将数据块加载到本地，进行合并；
+    当合并的数据超过256M，进行拆分，将拆分后的Region分配给不同的HregionServer管理；
+    当HregionServer宕机后，将HregionServer上的hlog拆分，然后分配给不同的HregionServer加载，修改.META.；
+    注意：HLog会同步到HDFS。
+
