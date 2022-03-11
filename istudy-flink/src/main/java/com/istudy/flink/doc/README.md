@@ -1,8 +1,8 @@
 ## Flink Join实现
 
 ## flink实时数仓优势
-    丰富的 API，Flink 提供极为丰富的多层次 API，包括 Stream API、Table API 及 Flink SQL；
-    生态完善，实时数仓的用途广泛，Flink支持多种存储（HDFS、ES 等）；
+    丰富的API，Flink提供极为丰富的多层次API，包括Stream API、Table API 及 Flink SQL；
+    生态完善，实时数仓的用途广泛，Flink支持多种存储（HDFS、ES等）；
     批流一体，Flink已经在将流计算和批计算的API进行统一。
 
 ## flink应用于场景：

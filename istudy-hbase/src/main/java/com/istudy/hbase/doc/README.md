@@ -17,20 +17,23 @@
     存储的数据达到某一个阈值时，HBase会将这个MemStroe的数据通过HFile的形式写入到磁盘并清空该MemStroe。
     
 ## Region
-    HBase自动把表水平划分成多个区域(region)，每个region会保存一个表 里面某段连续的数据；每个表一开始只有一个region，随着数据不断插 入表，
-    region不断增大，当增大到一个阀值的时候，region就会等分会 两个新的region（裂变）；
+    HBase自动把表水平划分成多个区域(region)，每个region会保存一个表里面某段连续的数据；
+    每个表一开始只有一个region，随着数据不断插入表，region不断增大，当增大到一个阀值的时候，
+    region就会等分会两个新的region（裂变）；
        
     当table中的行不断增多，就会有越来越多的region。这样一张完整的表 被保存在多个Regionserver上。
 
 ## HBase缓存机制
-HBase提供2种类型的缓存结构：MemStore和BlockCache。
-MemStore：HBase数据先写入HLog 之中，并同时写入MemStore，待满足一定条件后将MemStore中数据刷到磁盘，能提升HBase的写性能和读性能。
-BlockCache：HBase会将一次文件查找的Block块缓存到Cache中，以便后续同一请求或者相邻数据查找请求，可以直接从内存中获取，避免IO操作。
-
-其中MemStore是写缓存，BlockCache是读缓存。
-
-一个HRegionServer只有一个BlockCache，在HRegionServer启动的时候完成BlockCache的初始化，常用的BlockCache包括LruBlockCache，以及 CombinedBlockCache（LruBlockCache + BucketCache）。
-
+    HBase提供2种类型的缓存结构：MemStore和BlockCache。
+    MemStore：HBase数据先写入HLog之中，并同时写入MemStore，待满足一定条件后将
+    MemStore中数据刷到磁盘，能提升HBase的写性能和读性能。
+    
+    BlockCache：HBase会将一次文件查找的Block块缓存到Cache中，以便后续同一请求
+    或者相邻数据查找请求，可以直接从内存中获取，避免IO操作。
+    
+    其中MemStore是写缓存，BlockCache是读缓存。
+    
+    一个HRegionServer只有一个BlockCache，在HRegionServer启动的时候完成BlockCache的初始化，常用的BlockCache包括LruBlockCache，以及 CombinedBlockCache（LruBlockCache + BucketCache）。
 
 ## 使用场景
 #### 存储/查询
@@ -45,10 +48,16 @@ BlockCache：HBase会将一次文件查找的Block块缓存到Cache中，以便�
     目前操作系统都是64位系统，内存8字节对齐，控制在16个字节，8字节的整数倍利用了操作系统的最佳特性。
      
     rowkey散列原则:
-    如果rowkey按照时间戳的方式递增，不要将时间放在二进制码的前面，建议将rowkey的高位作为散列字段，由程序随机生成，低位放时间字段，这样将提高数据均衡分布在每个RegionServer，以实现负载均衡的几率。如果没有散列字段，首字段直接是时间信息，所有的数据都会集中在一个RegionServer上，这样在数据检索的时候负载会集中在个别的RegionServer上，造成热点问题，会降低查询效率。
+    如果rowkey按照时间戳的方式递增，不要将时间放在二进制码的前面，
+    建议将rowkey的高位作为散列字段，由程序随机生成，低位放时间字段，
+    这样将提高数据均衡分布在每个RegionServer，以实现负载均衡的几率。
+    如果没有散列字段，首字段直接是时间信息，所有的数据都会集中在一个RegionServer上，
+    这样在数据检索的时候负载会集中在个别的RegionServer上，造成热点问题，会降低查询效率。
      
     rowkey唯一原则:
-    必须在设计上保证其唯一性，rowkey是按照字典顺序排序存储的，因此，设计rowkey的时候，要充分利用这个排序的特点，将经常读取的数据存储到一块，将最近可能会被访问的数据放到一块。
+    必须在设计上保证其唯一性，rowkey是按照字典顺序排序存储的，因此，
+    设计rowkey的时候，要充分利用这个排序的特点，将经常读取的数据存储到一块，
+    将最近可能会被访问的数据放到一块。
     
 ## HBase的高并发和实时处理数据
 
