@@ -12,7 +12,7 @@
     然后将HTTP的请求的响应结果，解码成JAVA Bean，返回给调用者。Feign远程调用的基本流程，大致如下图所示。
     
     从下图可以看到，Feign通过处理注解，将请求模板化，当实际调用的时候，传入参数，根据参数再应用到请求上，进而转化成真正的Request请求。
-    通过Feign以及JAVA的动态代理机制，使得Java 开发人员，可以不用通过HTTP框架去封装HTTP请求报文的方式，完成远程服务的HTTP调用。
+    通过Feign以及JAVA的动态代理机制，使得Java开发人员，可以不用通过HTTP框架去封装HTTP请求报文的方式，完成远程服务的HTTP调用。
 ![Alt text](../feign/Feign远程调用.png)
 
 ## Feign远程调用的重要组件

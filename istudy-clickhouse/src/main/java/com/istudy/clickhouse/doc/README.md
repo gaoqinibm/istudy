@@ -29,16 +29,22 @@
     ) ENGINE = ReplicatedMergeTree('/clickhouse/tables/metro/metro_mdw_pcg', '{replica}') PARTITION BY (quartly, pcg_main_cat_id) 
     ORDER BY (storekey, custkey, cardholderkey)
     
-    ReplicatedMergeTree(复制表)引擎，可以针对相同主键的数据进行去重，它能够在合并分区时删除重复的数据。常使用这种引擎实现真正存储数据, 由于是分布式建表的, 数据分布在集群的各个机器中, 直接查表数据查不全, 所以要用到Distributed。
+    ReplicatedMergeTree(复制表)引擎，可以针对相同主键的数据进行去重，
+    它能够在合并分区时删除重复的数据。常使用这种引擎实现真正存储数据, 由于是分布式建表的,
+    数据分布在集群的各个机器中, 直接查表数据查不全, 所以要用到Distributed。
+    
     Distributed相当于视图, 不真正存储数据, 用来查数据, 速度快、数据全。
-    Distributed表引擎是分布式表的代名词，它自身不存储任何数据，数据都分散存储在某一个分片上，能够自动路由数据至集群中的各个节点，所以Distributed表引擎需要和其他数据表引擎一起协同工作。
+    Distributed表引擎是分布式表的代名词，它自身不存储任何数据，数据都分散
+    存储在某一个分片上，能够自动路由数据至集群中的各个节点，所以Distributed表
+    引擎需要和其他数据表引擎一起协同工作。
     
     Distributed(cluster_name,database_name,table_name[,sharding_key])
     各个参数的含义分别如下：
     cluster_name：集群名称，与集群配置中的自定义名称相对应。
     database_name：数据库名称
     table_name：表名称
-    sharding_key：可选的，用于分片的key值，在数据写入的过程中，分布式表会依据分片key的规则，将数据分布到各个节点的本地表。
+    sharding_key：可选的，用于分片的key值，在数据写入的过程中，
+    分布式表会依据分片key的规则，将数据分布到各个节点的本地表。
     
 ### clickhouse数据操作
     增加可以使用insert;
@@ -198,7 +204,7 @@
 
 #### 向量化执行引擎的优势：
     向量化执行引擎可以减少节点间的调度，提高CPU的利用率
-    因为列存数据，同一列的数据放在一起，导致向量化执行引擎在执行的时候拥有了更多的机会能够利用的当前硬件与编译的新优化特征
+    因为列存数据，同一列的数据放在一起，导致向量化执行引擎在执行的时候拥有了更多的机会能够利用当前硬件与编译的新优化特征
     因为列存数据存储将同类型的类似数据放在一起使得压缩比能够达到更高，这样可以拉近一些磁盘IO能力与计算能力的差距
     
 ### clickhouse使用场景是什么？

@@ -21,7 +21,7 @@
     每个表一开始只有一个region，随着数据不断插入表，region不断增大，当增大到一个阀值的时候，
     region就会等分会两个新的region（裂变）；
        
-    当table中的行不断增多，就会有越来越多的region。这样一张完整的表 被保存在多个Regionserver上。
+    当table中的行不断增多，就会有越来越多的region。这样一张完整的表被保存在多个Regionserver上。
 
 ## HBase缓存机制
     HBase提供2种类型的缓存结构：MemStore和BlockCache。
@@ -33,7 +33,9 @@
     
     其中MemStore是写缓存，BlockCache是读缓存。
     
-    一个HRegionServer只有一个BlockCache，在HRegionServer启动的时候完成BlockCache的初始化，常用的BlockCache包括LruBlockCache，以及 CombinedBlockCache（LruBlockCache + BucketCache）。
+    一个HRegionServer只有一个BlockCache，在HRegionServer启动的时候完成
+    BlockCache的初始化，常用的BlockCache包括LruBlockCache，以及 
+    CombinedBlockCache（LruBlockCache + BucketCache）。
 
 ## 使用场景
 #### 存储/查询

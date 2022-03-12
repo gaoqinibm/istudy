@@ -33,7 +33,7 @@
     set hive.groupby.skewindata=true;
     开启group by数据倾斜时负载均衡，生成的查询计划会有两个MRJob。
     
-    第一个MRJob 中，Map的输出结果集合会随机分布到Reduce中，每个Reduce做部分聚合操作，并输出结果，这样处理的结果是相同的GroupBy Key有可能被分发到不同的Reduce中，从而达到负载均衡的目的；
+    第一个MRJob中，Map的输出结果集合会随机分布到Reduce中，每个Reduce做部分聚合操作，并输出结果，这样处理的结果是相同的GroupBy Key有可能被分发到不同的Reduce中，从而达到负载均衡的目的；
     
     第二个MRJob再根据预处理的数据结果按照GroupBy Key分布到Reduce中（这个过程可以保证相同的GroupBy Key被分布到同一个Reduce中），最后完成最终的聚合操作。
     
@@ -43,7 +43,7 @@
 >> 一般发生在SQL中，group by和join on上，并且和数据逻辑绑定比较深。
 
 > spark中数据倾斜：包括spark streaming和spark SQL，主要表现：
->> 1)executor lost,OOM.shuffle 过程出错
+>> 1)executor lost,OOM.shuffle过程出错
 >> 2)Driver OOM
 >> 3)单个executor执行时间特别久，整个任务卡在某个阶段不能结束
 >> 4)正常运行的任务突然失败

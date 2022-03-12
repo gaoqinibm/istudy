@@ -1,4 +1,4 @@
-package com.istudy.hbase;
+package com.istudy.datax;
 
 import java.io.IOException;
 
