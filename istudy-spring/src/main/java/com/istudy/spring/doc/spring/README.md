@@ -55,3 +55,61 @@
     DisposableBean
 
 ## 循环依赖
+#### 循环依赖示例
+
+    @Service
+    public class A {
+        @Autowired
+        private B b;
+    }
+    
+    @Service
+    public class B {
+        @Autowired
+        private A a;
+    }
+    
+    //或者自己依赖自己
+    @Service
+    public class A {
+        @Autowired
+        private A a;
+    }
+    
+#### 如何解决循环依赖
+    在 Spring 中，只有同时满足以下两点才能解决循环依赖的问题：
+    依赖的Bean必须都是单例
+    依赖注入的方式，必须不全是构造器注入，且beanName字母序在前的不能是构造器注入
+    
+    
+    具体做法就是：先创建A，此时的A是不完整的（没有注入B），用个map保存这个不完整的A，再创建B，B需要A。
+    所以从那个map得到“不完整”的A，此时的B就完整了，然后A就可以注入B，然后A就完整了，B也完整了，且它们是相互依赖的。
+![Alt text](spring循环依赖.jpg)
+
+
+    spring内部有三级缓存：
+    singletonObjects 一级缓存，用于保存实例化、注入、初始化完成的bean实例
+    earlySingletonObjects 二级缓存，用于保存实例化完成的bean实例
+    singletonFactories 三级缓存，用于保存bean创建工厂，以便于后面扩展有机会创建代理对象。
+    
+    @Service
+    public class TestService1 {
+     
+        @Autowired
+        private TestService2 testService2;
+     
+        public void test1() {
+        }
+    }
+     
+    @Service
+    public class TestService2 {
+     
+        @Autowired
+        private TestService1 testService1;
+     
+        public void test2() {
+        }
+    }
+![Alt text](spring解决循环依赖.jpeg)
+    
