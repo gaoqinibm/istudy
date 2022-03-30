@@ -3,7 +3,7 @@
 ![Alt text](../doc/elasticsearch倒排索引原理.jpg)
 
     如上图所示：
-    Term Index 以树的形式保存在内存中，运用了FST（finite state transducers）+压缩公共前缀方法极大的节省了内存，
+    Term Index以树的形式保存在内存中，运用了FST（finite state transducers）+压缩公共前缀方法极大的节省了内存，
     通过Term Index查询到Term Dictionary所在的block再去磁盘上找term减少了IO次数
     
     Term Dictionary排序后通过二分法将检索的时间复杂度从原来N降低为logN

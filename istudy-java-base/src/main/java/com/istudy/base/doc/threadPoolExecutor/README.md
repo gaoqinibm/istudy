@@ -23,7 +23,7 @@
     
     6.rejectedExecutionHandler：任务拒绝处理器
             * 两种情况会拒绝处理任务：
-                - 当线程数已经达到maxPoolSize，切队列已满，会拒绝新任务
+                - 当线程数已经达到maxPoolSize，且任务队列已满，会拒绝新任务
                 - 当线程池被调用shutdown()后，会等待线程池里的任务执行完毕，再shutdown。如果在调用shutdown()和线程池真正shutdown之间提交任务，会拒绝新任务
             * 线程池会调用rejectedExecutionHandler来处理这个任务。如果没有设置默认是AbortPolicy，会抛出异常
             * ThreadPoolExecutor类有几个内部实现类来处理这类情况：
