@@ -5,6 +5,78 @@
     Version：每次新增或修改数据都会产生一个新版本
     总结：HBase的数据模型由行键、列簇，列名和版本号组成
     
+## RowKey的特点
+    类似于MySQL、Oracle中的主键，用于标示唯一的行；
+    完全是由用户指定的一串不重复的字符串；
+    HBase中的数据永远是根据Rowkey的字典排序来排序的。
+
+## RowKey的作用
+    读写数据时通过RowKey找到对应的Region；
+    MemStore中的数据按RowKey字典顺序排序；
+    HFile中的数据按RowKey字典顺序排序。
+    
+## RowKey的长度
+    RowKey可以是任意的字符串，最大长度64KB（因为Rowlength占2字节）。建议越短越好，原因如下：
+    1.数据的持久化文件HFile中是按照KeyValue存储的，如果rowkey过长，比如超过100字节，1000w行数据，光rowkey就要占用100*1000w=10亿个字节，将近1G数据，这样会极大影响HFile的存储效率；
+    2.MemStore将缓存部分数据到内存，如果rowkey字段过长，内存的有效利用率就会降低，系统不能缓存更多的数据，这样会降低检索效率；
+    3.目前操作系统都是64位系统，内存8字节对齐，控制在16个字节，8字节的整数倍利用了操作系统的最佳特性。
+    
+## RowKey设计技巧
+    避免热点的方法 - Salting
+    避免热点的方法 - Hashing
+    避免热点的方法 - Reversing
+    
+    Salting加盐不是密码学中的加盐，而是在rowkey的前面增加随机数。
+    优缺点：因为分配是随机的，所以如果你想要以字典序取回数据，需要做更多工作。加盐这种方式增加了写时的吞吐量，但是当读时有了额外代价。
+    
+    Hashing的原理是计算RowKey的hash值，然后取hash的部分字符串和原来的RowKey进行拼接。这里说的hash包含MD5、sha1、sha256或sha512等算法。
+    优缺点：可以一定程度打散整个数据集，但是不利于Scan；比如我们使用md5算法，来计算Rowkey的md5值，然后截取前几位的字符串。subString(MD5(设备ID), 0, x) + 设备ID，其中x一般取5或6。
+    
+    Reversing的原理是反转一段固定长度或者全部的键。
+
+## RowKey设计案例剖析
+#### 交易类表Rowkey设计
+    查询某个卖家某段时间内的交易记录
+    sellerId + timestamp + orderId
+    
+    查询某个买家某段时间内的交易记录
+    buyerId + timestamp ＋orderId
+    
+    根据订单号查询
+    orderNo
+    
+    如果某个商家卖了很多商品，可以如下设计 Rowkey 实现快速搜索
+    salt + sellerId + timestamp 其中，salt 是随机数。
+    可以支持的场景：
+    全表Scan
+    按照sellerId查询
+    按照sellerId + timestamp 查询
+    
+#### 金融风控Rowkey设计
+    查询某个用户的用户画像数据
+    prefix + uid
+    prefix + idcard
+    prefix + tele
+    其中 prefix = substr(md5(uid),0 ,x)， x取5-6。uid、idcard以及tele分别表示用户唯一标识符、身份证、手机号码。
+    
+#### 车联网Rowkey设计
+    查询某辆车在某个时间范围的交易记录
+    carId + timestamp
+    
+    某批次的车太多，造成热点
+    prefix + carId + timestamp 其中 prefix = substr(md5(uid),0 ,x)
+    
+#### 查询最近的数据
+    查询用户最新的操作记录或者查询用户某段时间的操作记录，RowKey设计如下：
+    uid + Long.Max_Value - timestamp
+    
+#### 支持的场景
+    查询用户最新的操作记录
+    Scan [uid] startRow [uid][000000000000] stopRow [uid][Long.Max_Value - timestamp]
+    
+    查询用户某段时间的操作记录
+    Scan [uid] startRow [uid][Long.Max_Value – startTime] stopRow [uid][Long.Max_Value - endTime]
+    
 ## Region和RegionServers
     Region被分配到的集群节点称为RegionServers，RegionServers负责提供HBase中数据的读写功能。一个RegionServers
     可以容纳大约1000个Region，每个Region包含一部分数据。
