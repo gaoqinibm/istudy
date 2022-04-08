@@ -46,12 +46,35 @@
     sharding_key：可选的，用于分片的key值，在数据写入的过程中，
     分布式表会依据分片key的规则，将数据分布到各个节点的本地表。
     
+### MergeTree原理
+    MergeTree引擎是Clickhouse表引擎中最重要, 最强大的引擎.
+    MergeTree引擎族中的引擎被设计用于将大量数据写入表中. 这些数据被快速的写入每个表的每个part, 
+    然后在Clickhouse底层会进行多个parts的合并(merge). 这种形式的处理比在插入过程中不断重写存储中的数据要高效得多.
+    
+    主要的功能点:
+    存储按主键(primary key)排序的数据.
+    这允许用户可以创建一个小型的稀疏索引, 有利于更快的在表中找到索要的数据.
+    
+    如果partitioning key被设置, 分片(partitions)可以被使用.
+    Clickhouse支持某些带分区的操作, 对于同一份数据进行处理, 带有分区的操作会比一般操作更有效. 
+    当在查询语句中指定了分区后, Clickhouse会根据分区信息来进行数据的切分, 这样极大程度上提升了查询的性能.
+    
+    数据副本机制支持(Replication)
+    ReplicatedMergeTree并引擎提供了数据副本机制.
+    
+    支持数据采样
+    如果必要, 可以在表中设置数据采样方式.
+    
 ### clickhouse数据操作
     增加可以使用insert;
     不能修改,也不能指定删除;
     可以删除分区,会删除对应的数据 我使用--help看了一下有truncate table,但是没有具体使用过,如果要全部删除数据可以删除表,然后在建表查数据
     可以使用脚本操作
 
+    Clickhouse通过alter方式实现更新、删除。语法为：
+    ALTER TABLE [db.]table DELETE WHERE filter_expr
+    ALTER TABLE [db.]table UPDATE column1 = expr1 [, ...] WHERE filter_expr
+    
 ### 示例
     database=$1
     table=$2
