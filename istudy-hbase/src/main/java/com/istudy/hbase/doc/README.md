@@ -17,7 +17,9 @@
     
 ## RowKey的长度
     RowKey可以是任意的字符串，最大长度64KB（因为Rowlength占2字节）。建议越短越好，原因如下：
-    1.数据的持久化文件HFile中是按照KeyValue存储的，如果rowkey过长，比如超过100字节，1000w行数据，光rowkey就要占用100*1000w=10亿个字节，将近1G数据，这样会极大影响HFile的存储效率；
+    1.数据的持久化文件HFile中是按照KeyValue存储的，如果rowkey过长，比如超过100字节，1000w行数据，
+    光rowkey就要占用100*1000w=10亿个字节，将近1G数据，这样会极大影响HFile的存储效率；
+    
     2.MemStore将缓存部分数据到内存，如果rowkey字段过长，内存的有效利用率就会降低，系统不能缓存更多的数据，这样会降低检索效率；
     3.目前操作系统都是64位系统，内存8字节对齐，控制在16个字节，8字节的整数倍利用了操作系统的最佳特性。
     
@@ -45,12 +47,12 @@
     根据订单号查询
     orderNo
     
-    如果某个商家卖了很多商品，可以如下设计 Rowkey 实现快速搜索
-    salt + sellerId + timestamp 其中，salt 是随机数。
+    如果某个商家卖了很多商品，可以如下设计Rowkey实现快速搜索
+    salt + sellerId + timestamp 其中，salt是随机数。
     可以支持的场景：
     全表Scan
     按照sellerId查询
-    按照sellerId + timestamp 查询
+    按照sellerId + timestamp查询
     
 #### 金融风控Rowkey设计
     查询某个用户的用户画像数据
@@ -84,7 +86,7 @@
 ## HBase的存储
     为了提高数据写入时的吞吐量，HBase并不会实时的写入数据直接刷入磁盘，而是先将数据放入内存中进行保管。
     将数据直接放入内存读写虽然很快，但这样不安全，一旦服务器重启数据全部丢失。HBase采用预写日志结合MemStroe来解决。
-    当客户端向HBase发起写入请求的时候，HBase首先会通过RegionServers将数据写入预写日志，之后在用MemStroe对象将数据
+    当客户端向HBase发起写入请求的时候，HBase首先会通过RegionServers将数据写入预写日志，之后用MemStroe对象将数据
     保存到内存中。由于有了预写日志，当服务出现故障重启后，Region可以通过日志将数据复原到MemStroe。然后当一个MemStroe
     存储的数据达到某一个阈值时，HBase会将这个MemStroe的数据通过HFile的形式写入到磁盘并清空该MemStroe。
     
