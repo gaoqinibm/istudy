@@ -9,7 +9,6 @@
     那自然30秒之后锁就解开了呗.
 ![Alt text](Redisson分布式锁的底层原理.jpg)
     
-    
 ## redis使用jedis和redisssion实现分布式锁
     1.使用jedis客户端操作redis,实现分布式锁
     2.使用redission框架操作redis,实现分布式锁

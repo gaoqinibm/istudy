@@ -8,7 +8,8 @@
     canal和Kafka两个配置,当消息体大小超出了canal端配置maxRequestSize的配置后,错误日志里会明确消息体大小,
     调整Kafka和Canal的消息体大小，类似"The message is 17853226 bytes when serialized which is larger 
     than the maximum request size you have configured with the max.request.size configuration.",
-    如果消息体大小超出了canal端的配置且超出了Kafka端的限制,就只会输出"The request included a message larger than the max message size the server will accept"
+    如果消息体大小超出了canal端的配置且超出了Kafka端的限制,就只会输出
+    "The request included a message larger than the max message size the server will accept"
     
     解决方式：
     #canal相关配置

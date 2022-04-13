@@ -4,7 +4,7 @@
     也可以将HDFS的数据导进到关系型数据库中。
     
     sqoop是连接关系型数据库和hadoop的桥梁，主要有两个方面(导入和导出)：
-    A. 将关系型数据库的数据导入到Hadoop及其相关的系统中，如 Hive和HBase
+    A. 将关系型数据库的数据导入到Hadoop及其相关的系统中，如Hive和HBase
     B. 将数据从Hadoop系统里抽取并导出到关系型数据库
 ![Alt text](../doc/导入和导出.jpg)
 
