@@ -122,3 +122,21 @@
     对于简单查询，允许延迟大约50毫秒 列中的数据相对较小：数字和短字符串(例如，每个URL 60个字节)
     处理单个查询时需要高吞吐量(每台服务器每秒可达数十亿行) 事务不是必须的 对数据一致性要求低 每个查询有一个大表。除了他以外，其他的都很小。
     查询结果明显小于源数据。换句话说，数据经过过滤或聚合，因此结果适合于单个服务器的RAM中
+    
+### 为什么要使用Clickhouse
+    一、介绍
+    ClickHouse是一个面向列存储的OLAP分析数据库，以其强大的分析速度而闻名。
+    
+    二、ClickHouse、tidb与mysql：
+    ClickHouse是当前查询速度比较快的数据库，非常适合用来分析数据(OLAP)，适合数据量特别大的场景，
+    但目前只支持insert,不支持update和delete；
+    tidb和mysql是行数据库，适合用来做数据的增删改操作(OLTP)，tidb目前是mysql的替代品，基本兼容mysql协议，
+    在数据量特别大的场景tidb比mysql效率高很多，但在查询方面tidb比ClickHouse差很多。
+    
+    三、ClickHouse与Elasticsearch:
+    (1)Elasticsearch最擅长的主要是完全搜索场景（where过滤后的记录数较少），支持全文检索，
+    ClickHouse凭借极致的列存和向量化计算,适合大规模数据的分析场景下（where过滤后的记录数较多）;
+    
+    (2)Elasticsearch的并发处理能力立足于内存Cache,ClickHouse的立足于磁盘吞吐，
+    ClickHouse更加适合低成本、大数据量的分析场景，它能够充分利用磁盘的带宽能力。
+    数据导入和存储成本上，ClickHouse更加具有绝对的优势。
