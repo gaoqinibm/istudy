@@ -38,3 +38,19 @@
 			两者都是流批统一的计算框架
 			Spark是以小批量的方式来处理流式数据。
 			Flink是以流式数据的方式来处理批量数据。
+			
+## Flink中的窗口和时间
+    窗口和时间是Flink中的核心概念之一。在实际成产环境中，对数据流上的聚合需要由窗口来划定范围，
+    比如“计算过去的 5 分钟”或者“最后 100 个元素的和”。
+
+    Flink 支持了多种窗口模型比如滚动窗口（Tumbling Window）、滑动窗口（Sliding Window）及会话窗口（Session Window）等。
+
+    下图展示了 Flink 支持的多种窗口模型：
+![Alt text](../doc/窗口.jpg)
+
+    同时，Flink 支持了事件时间（Event Time）、摄取时间（Ingestion Time）和处理时间（Processing Time）
+    三种时间语义用来满足实际生产中对于时间的特殊需求。
+![Alt text](../doc/时间.jpg)
+
+    Flink自身还支持了有状态的算子操作、容错机制、Checkpoint、Exactly-once语义等更多高级特性，
+    来支持用户在不同的业务场景中的需求。
