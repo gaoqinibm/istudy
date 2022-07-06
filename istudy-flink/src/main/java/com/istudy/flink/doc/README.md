@@ -54,3 +54,15 @@
 
     Flink自身还支持了有状态的算子操作、容错机制、Checkpoint、Exactly-once语义等更多高级特性，
     来支持用户在不同的业务场景中的需求。
+    
+## Flink处理乱序数据（watermark + allowLateNess + sideOutPut）
+    watermark本质上是一个时间戳，且是动态变化的，会根据当前最大（新）事件时间产生。
+    watermark = 进入 Flink 窗口的最大的事件时间(maxEventTime)— 指定的延迟时间(t)
+    
+    allowLateNess是将窗口关闭时间再延迟一段时间。
+    sideOutPut是最后兜底操作，当指定窗口已经彻底关闭后，就会把所有过期延迟数据放到侧输出流，让用户决定如何处理。
+    
+## Flink的Checkpoint详解-保证数据的在分布式环境下的一致性
+    当一个任务在运行过程中出现故障时，可以根据Checkpoint的信息恢复到故障之前的某一状态，
+    然后从该状态恢复任务的运行。 在Flink中，Checkpoint机制采用的是chandy-lamport（分布式快照）算法，
+    通过Checkpoint机制，保证了Flink程序内部的Exactly Once语义。

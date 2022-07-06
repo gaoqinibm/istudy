@@ -7,6 +7,7 @@
     Topic：可以理解为一个队列，一个Topic又分为一个或多个分区，
     Consumer Group：这是kafka用来实现一个topic消息的广播（发给所有的consumer）和单播（发给任意一个consumer）的手段。
     一个topic可以有多个Consumer Group。
+    每一个consumer实例都属于一个consumer group，每一条消息只会被同一个consumer group里的一个consumer实例消费。
     
     Broker：一台kafka服务器就是一个broker。一个集群由多个broker组成。一个broker可以容纳多个topic。
     Partition：为了实现扩展性，一个非常大的topic可以分布到多个broker上，每个partition是一个有序的队列。
