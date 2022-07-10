@@ -8,7 +8,7 @@
 ### clickhouse引擎
     clickhouse有很多引擎,最常用的是MergeTree家族 还有Distributed引擎
     
-    ReplacingMergeTree 是MergeTree的一个变种，它存储特性完全继承MergeTree，只是多了一个去重的功能。 
+    ReplacingMergeTree是MergeTree的一个变种，它存储特性完全继承MergeTree，只是多了一个去重的功能。 
     尽管MergeTree可以设置主键，但是primary key其实没有唯一约束的功能。如果你想处理掉重复的数据，
     可以借助这个ReplacingMergeTree。
 
