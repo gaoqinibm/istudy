@@ -90,6 +90,6 @@
      }
      
 ## 区别
-    jedis：提供了比较全面的 Redis 命令的支持。
-    Redisson：实现了分布式和可扩展的 Java 数据结构，与jedis相比Redisson的功能相对简单，
-    不支持排序、事务、管道、分区等 Redis 特性。
+    jedis：提供了比较全面的Redis命令的支持。
+    Redisson：实现了分布式和可扩展的Java数据结构，与jedis相比Redisson的功能相对简单，
+    不支持排序、事务、管道、分区等Redis特性。

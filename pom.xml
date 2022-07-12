@@ -31,7 +31,6 @@
         <module>istudy-docker</module>
         <module>istudy-spring</module>
         <module>istudy-springboot</module>
-        <module>istudy-springmvc</module>
         <module>istudy-mybatis</module>
         <module>istudy-rocketmq</module>
         <module>istudy-rabbitmq</module>
