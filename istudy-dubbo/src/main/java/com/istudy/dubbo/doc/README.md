@@ -7,7 +7,7 @@
 
     dubbo在原有的spi基础上主要有以下的改变,
     1.配置文件采用键值对配置的方式，使用起来更加灵活和简单 
-    2.增强了原本SPI的功能，使得SPI具备ioc和aop的功能，这在原本的java中spi是不支持的。
+    2.增强了原本SPI的功能，使得SPI具备IOC和AOP的功能，这在原本的java中spi是不支持的。
     dubbo的spi是通过ExtensionLoader来解析的，通过ExtensionLoader来加载指定的实现类，配置文件的路径在META-INF/dubbo路径下
 
     jdk SPI使用ServiceLoader.load()

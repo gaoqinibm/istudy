@@ -6,6 +6,16 @@
     就是它们有一个大脑，比如ElasticSearch集群中有Master节点，Zookeeper集群中有Leader节点。
     Zookeeper集群中是不会出现脑裂问题的，而不会出现的原因就跟过半机制有关。过半机制中必须是大于
     
+## Zookeeper通过ZAB保证分布式事务的最终一致性。
+    ZAB全称Zookeeper Atomic Broadcast（ZAB，Zookeeper原子消息广播协议）
+    1.ZAB是一种专门为Zookeeper设计的一种支持 崩溃恢复 的 原子广播协议 ，是Zookeeper保证
+    数据一致性的核心算法。ZAB借鉴了Paxos算法，但它不是通用的一致性算法，是特别为Zookeeper设计的。
+    
+    2.基于ZAB协议，Zookeeper实现了⼀种主备模式的系统架构来保持集群中各副本之间的数据的⼀致性，
+    表现形式就是使⽤⼀个单⼀的主进程（Leader服务器）来接收并处理客户端的所有事务请求（写请求），
+    并采⽤ZAB的原⼦⼴播协议，将服务器数据的状态变更为事务 Proposal的形式⼴播到所有的Follower进程中。
+    
+    
 ## zookeeper分布式锁避免羊群效应
 
 

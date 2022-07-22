@@ -48,7 +48,7 @@
     下图展示了 Flink 支持的多种窗口模型：
 ![Alt text](../doc/窗口.jpg)
 
-    同时，Flink 支持了事件时间（Event Time）、摄取时间（Ingestion Time）和处理时间（Processing Time）
+    同时，Flink支持了事件时间（Event Time）、摄取时间（Ingestion Time）和处理时间（Processing Time）
     三种时间语义用来满足实际生产中对于时间的特殊需求。
 ![Alt text](../doc/时间.jpg)
 
@@ -57,7 +57,7 @@
     
 ## Flink处理乱序数据（watermark + allowLateNess + sideOutPut）
     watermark本质上是一个时间戳，且是动态变化的，会根据当前最大（新）事件时间产生。
-    watermark = 进入 Flink 窗口的最大的事件时间(maxEventTime)— 指定的延迟时间(t)
+    watermark = 进入Flink窗口的最大的事件时间(maxEventTime)— 指定的延迟时间(t)
     
     allowLateNess是将窗口关闭时间再延迟一段时间。
     sideOutPut是最后兜底操作，当指定窗口已经彻底关闭后，就会把所有过期延迟数据放到侧输出流，让用户决定如何处理。
