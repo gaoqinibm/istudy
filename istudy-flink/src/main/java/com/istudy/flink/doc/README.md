@@ -66,3 +66,11 @@
     当一个任务在运行过程中出现故障时，可以根据Checkpoint的信息恢复到故障之前的某一状态，
     然后从该状态恢复任务的运行。 在Flink中，Checkpoint机制采用的是chandy-lamport（分布式快照）算法，
     通过Checkpoint机制，保证了Flink程序内部的Exactly Once语义。
+    
+## flink实时数仓流图
+![Alt text](../doc/flink实时数仓流图.jpg)
+
+    由上图可见，ODS的业务日志收集到Kafka中，Flink从Kafka中消费业务日志，清洗处理后将业务模型再回写到Kafka中。
+    然后再基于Flink去消费Kafka中的模型，提取维度和指标，统计后输出报表。有些报表会直接写到sql或HBase中，
+    还有一些报表会回写到Kafka中，再由Druid从Kafka中主动摄取这部分报表数据。
+    在整个数据流图中Flink是核心的计算引擎，负责清洗日志、统计报表。
