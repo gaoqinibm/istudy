@@ -42,9 +42,7 @@
     第一个MRJob中，Map的输出结果集合会随机分布到Reduce中，每个Reduce做部分聚合操作，并输出结果，这样处理的结果是相同的GroupBy Key有可能被分发到不同的Reduce中，从而达到负载均衡的目的；
     
     第二个MRJob再根据预处理的数据结果按照GroupBy Key分布到Reduce中（这个过程可以保证相同的GroupBy Key被分布到同一个Reduce中），最后完成最终的聚合操作。
-    
-    
-    
+      
 > hive数据倾斜
 >> 一般发生在SQL中，group by和join on上，并且和数据逻辑绑定比较深。
 
