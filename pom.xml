@@ -47,6 +47,7 @@
         <module>istudy-sqoop</module>
         <module>istudy-flume</module>
         <module>人工智能</module>
+        <module>平台和中台</module>
         <!--        <module>设计模式</module>-->
 <!--        <module>配置中心</module>-->
     </modules>
