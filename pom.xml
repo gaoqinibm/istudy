@@ -50,6 +50,11 @@
         <module>平台和中台</module>
         <!--        <module>设计模式</module>-->
 <!--        <module>配置中心</module>-->
+        <module>istudy-druid</module>
+        <module>istudy-doris</module>
+        <module>istudy-hudi</module>
+        <module>istudy-presto</module>
+        <module>istudy-impala</module>
     </modules>
 
     <properties>
