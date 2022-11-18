@@ -124,3 +124,4 @@
     maxCompute(大数据计算服务，原名ODPS)是一种快速、完全托管的TB/PB级数据仓库解决方案。
     
 ## DolphinScheduler（海豚调度）
+    DolphinScheduler(原EasyScheduler) 是一个分布式工作流任务调度系统，主要解决数据研发ETL错综复杂的依赖关系

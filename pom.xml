@@ -18,43 +18,50 @@
         </developer>
     </developers>
     <modules>
-        <module>istudy-redis</module>
-        <module>istudy-dubbo</module>
+        <module>istudy-canal</module>
+        <module>istudy-clickhouse</module>
         <module>istudy-cloud</module>
-        <module>istudy-zookeeper</module>
-        <module>istudy-elasticsearch</module>
-        <module>istudy-nacos</module>
-        <module>istudy-jvm</module>
-        <module>istudy-other</module>
-        <module>istudy-mysql</module>
-        <module>istudy-tomcat</module>
+        <module>istudy-common</module>
+        <module>istudy-datax</module>
         <module>istudy-docker</module>
+        <module>istudy-doris</module>
+        <module>istudy-druid</module>
+        <module>istudy-dubbo</module>
+        <module>istudy-elasticsearch</module>
+        <module>istudy-flink</module>
+        <module>istudy-flume</module>
+        <module>istudy-hadoop</module>
+        <module>istudy-hbase</module>
+        <module>istudy-hive</module>
+        <module>istudy-hudi</module>
+        <module>istudy-impala</module>
+        <module>istudy-java-base</module>
+        <module>istudy-jvm</module>
+        <module>istudy-k8s</module>
+        <module>istudy-kafka</module>
+        <module>istudy-kudu</module>
+        <module>istudy-mongodb</module>
+        <module>istudy-mybatis</module>
+        <module>istudy-mysql</module>
+        <module>istudy-nacos</module>
+        <module>istudy-netty</module>
+        <module>istudy-other</module>
+        <module>istudy-presto</module>
+        <module>istudy-rabbitmq</module>
+        <module>istudy-redis</module>
+        <module>istudy-rocketmq</module>
+        <module>istudy-spark</module>
         <module>istudy-spring</module>
         <module>istudy-springboot</module>
-        <module>istudy-mybatis</module>
-        <module>istudy-rocketmq</module>
-        <module>istudy-rabbitmq</module>
-        <module>istudy-netty</module>
-        <module>istudy-k8s</module>
-        <module>istudy-java-base</module>
-        <module>istudy-hbase</module>
-        <module>istudy-common</module>
-        <module>istudy-kafka</module>
-        <module>istudy-hadoop</module>
-        <module>架构方向</module>
-        <module>istudy-clickhouse</module>
-        <module>istudy-spark</module>
         <module>istudy-sqoop</module>
-        <module>istudy-flume</module>
+        <module>istudy-tomcat</module>
+        <module>istudy-yarn</module>
+        <module>istudy-zookeeper</module>
         <module>人工智能</module>
         <module>平台和中台</module>
-        <!--        <module>设计模式</module>-->
-<!--        <module>配置中心</module>-->
-        <module>istudy-druid</module>
-        <module>istudy-doris</module>
-        <module>istudy-hudi</module>
-        <module>istudy-presto</module>
-        <module>istudy-impala</module>
+        <module>架构方向</module>
+        <module>设计模式</module>
+        <module>配置中心</module>
     </modules>
 
     <properties>
