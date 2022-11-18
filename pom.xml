@@ -47,6 +47,7 @@
         <module>istudy-netty</module>
         <module>istudy-other</module>
         <module>istudy-presto</module>
+        <module>istudy-pulsar</module>
         <module>istudy-rabbitmq</module>
         <module>istudy-redis</module>
         <module>istudy-rocketmq</module>
