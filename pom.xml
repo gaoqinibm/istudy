@@ -30,10 +30,12 @@
         <module>istudy-elasticsearch</module>
         <module>istudy-flink</module>
         <module>istudy-flume</module>
+        <module>istudy-greenplum</module>
         <module>istudy-hadoop</module>
         <module>istudy-hbase</module>
         <module>istudy-hive</module>
         <module>istudy-hudi</module>
+        <module>istudy-iceberg</module>
         <module>istudy-impala</module>
         <module>istudy-java-base</module>
         <module>istudy-jvm</module>
