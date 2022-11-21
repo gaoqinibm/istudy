@@ -111,3 +111,25 @@
     血缘分析是分析元数据的上游数据信息，用于追溯元数据的来源和加工过程。
     影响分析是分析元数据的下游数据信息，用于掌握元数据变更可能造成的影响。
     全链分析是血缘分析+影响分析，用于展现数据的来龙去脉。
+
+### 数据采集适配器
+
+### ODPS
+    开放数据处理服务(Open Data Processing Service,简称ODPS),2016年后更名MaxComputer
+
+### DataWorks和MaxCompute关系
+    DataWorks和MaxCompute关系紧密：DataWorks为MaxCompute提供一站式的数据同步、业务流程设计、数据开发、管理和运维功能。
+    DataWorks是基于MaxCompute计算和存储，提供工作流可视化开发、调度运维托管的一站式海量数据离线加工分析平台。在数加（一站式大数据平台）中，DataWorks控制台即为MaxCompute控制台。
+    可以将DataWorks理解成MaxCompute的一种Web客户端。MaxCompute是DataWorks的一种计算引擎。
+
+### 阿里云DataWorks和MaxCompute简介
+    MaxCompute（大数据计算服务）是阿里巴巴自主研发的海量数据处理平台，主要提供数据上传和下载通道，提供SQL及MapReduce等多种计算分析服务，同时还提供完善的安全解决方案。
+    DataWorks（数据工场，原大数据开发套件）是基于MaxCompute计算引擎的一站式大数据工场，它能帮助您快速完成数据集成、开发、治理、服务、质量、安全等全套数据研发工作。
+![Alt text](../doc/DataWorks和MaxCompute.jpg)
+
+    盘古：相当于Hadoop中的HDFS
+    伏羲：相当于Hadoop中的YARN
+    MaxCompute Engine：相当于MR、Tez等计算引擎
+    MaxCompute和DataWorks一起向用户提供完善的ETL和数仓管理能力，以及SQL、MR、Graph等多种经典的分布式计算模型，能够更快速地解决用户海量数据计算问题，有效降低企业成本，保障数据安全。
+
+
