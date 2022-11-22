@@ -1,48 +1,47 @@
 ## Doris简介
-    Apache Doris 是一个基于 MPP 架构的高性能、实时的分析型数据库，以极速易用的特点被人们所熟知，
+    Apache Doris是一个基于MPP架构的高性能、实时的分析型数据库，以极速易用的特点被人们所熟知，
     仅需亚秒级响应时间即可返回海量数据下的查询结果，不仅可以支持高并发的点查询场景，也能支持高吞吐的复杂分析场景。
-    基于此，Apache Doris 能够较好的满足报表分析、即席查询、统一数仓构建、数据湖联邦查询加速等使用场景，
-    用户可以在此之上构建用户行为分析、AB 实验平台、日志检索分析、用户画像分析、订单分析等应用。
+    基于此，Apache Doris能够较好的满足报表分析、即席查询、统一数仓构建、数据湖联邦查询加速等使用场景，
+    用户可以在此之上构建用户行为分析、AB实验平台、日志检索分析、用户画像分析、订单分析等应用。
 
 ### 使用场景
-
 
 ### Doris整体架构
 ![Alt text](../doc/Doris整体架构.jpg)
 
-    Doris 的整体架构和 TiDB 类似，借助 MySQL 协议，用户使用任意 MySQL 的 ODBC/JDBC以及MySQL 的客户端，
-    都可以直接访问 Doris。Doris 中的模块包括 FE 和 BE 两类：FE 主要负责元数据的管理、存储，以及查询的解析等；
-    一个用户请求经过 FE 解析、规划后，具体的执行计划会发送给 BE，BE 则会完成查询的具体执行。
-    BE 节点主要负责数据的存储、以及查询计划的执行。目前平台的 FE 部分主要使用 Java，BE 部分主要使用 C++。
+    Doris的整体架构和TiDB 类似，借助MySQL协议，用户使用任意MySQL的ODBC/JDBC以及MySQL的客户端，
+    都可以直接访问Doris。Doris中的模块包括FE和BE两类：FE主要负责元数据的管理、存储，以及查询的解析等；
+    一个用户请求经过FE解析、规划后，具体的执行计划会发送给BE，BE则会完成查询的具体执行。
+    BE节点主要负责数据的存储、以及查询计划的执行。目前平台的FE部分主要使用Java，BE部分主要使用C++。
 
 ### Doris数据分布
 ![Alt text](../doc/Doris数据分布.jpg)
 
-    如果从表的角度来看数据结构，用户的一张 Table 会拆成多个 Tablet，Tablet 会存成多副本，存储在不同的 BE 中，
+    如果从表的角度来看数据结构，用户的一张Table会拆成多个Tablet，Tablet会存成多副本，存储在不同的BE中，
     从而保证数据的高可用和高可靠。
 
 ### Doris的使用方式
-    Doris 的使用方式和 MySQL 类似，创建 database，创建 table，导入数据、执行查询等。
+    Doris的使用方式和MySQL类似，创建database，创建table，导入数据、执行查询等。
 ![Alt text](../doc/Doris的使用方式.jpg)
 
 ### Doris数据可靠性
-    元数据使用 Memory+Checkpoint+Journal ( 分别是什么？)，使用 BTBJE ( 类似于 Raft ) 协议实现高可用性和高可靠性。
-    Doris 内部自行管理数据的多副本和自动修复。保证数据的高可用、高可靠。在服务器宕机的情况下，服务依然可用，数据也不会丢失。
+    元数据使用Memory+Checkpoint+Journal (分别是什么？)，使用BTBJE(类似于Raft)协议实现高可用性和高可靠性。
+    Doris内部自行管理数据的多副本和自动修复。保证数据的高可用、高可靠。在服务器宕机的情况下，服务依然可用，数据也不会丢失。
 ![Alt text](../doc/Doris数据可靠性.jpg)
 
-### 支持 MPP
-    MPP 即 Massively Parallel Processing，大规模并行处理，即海量数据并发查询。
+### 支持MPP
+    MPP即Massively Parallel Processing，大规模并行处理，即海量数据并发查询。
 
-### Kafka 消息队列加载-类似clickhouse
-    Doris 内部支持订阅 Kafka 数据流，实现直接对接 Kafka：
-    用户数据源经 Kafka 消息队列收集后，可以依次进入到 Doris 中，通过 Doris 做报表展示和决策分析等工作。
+### Kafka消息队列加载-类似clickhouse
+    Doris内部支持订阅Kafka数据流，实现直接对接Kafka：
+    用户数据源经Kafka消息队列收集后，可以依次进入到Doris中，通过Doris做报表展示和决策分析等工作。
 
-### Doris 其他特性
+### Doris其他特性
     原子性——即一批数据要么都生效，要么都不生效。
     支持单机多盘
     向量化执行
-    UDF ( User Defined Function 用户自定义函数 )
-    内置 HLL 类型，快速计算 UV
+    UDF (User Defined Function用户自定义函数)
+    内置HLL类型，快速计算UV
 
 ### 核心特性
     支持高并发的点查询和复杂的大吞吐查询
@@ -62,13 +61,13 @@ ch优点：
 聚合结果必须小于一台机器的内存大小，否则失败
 
 比较
-Doris支持Array，ch支持Array/嵌套类型/枚举类型等。
-Doris支持事务和幂等性导入数据，ch不支持。
-Doris的join性能比较好，ch的单表查询性能好。
+Doris支持Array，Clickhouse支持Array/嵌套类型/枚举类型等。
+Doris支持事务和幂等性导入数据，Clickhouse不支持。
+Doris的join性能比较好，Clickhouse的单表查询性能好。
 
 ### 技术选型
 Doris更优的方面
-1. 使用更简单，如建表更简单，SQL标准支持更好， Join性能更好，导数功能更强大
+1. 使用更简单，如建表更简单，SQL标准支持更好，Join性能更好，导数功能更强大
    1. 运维更简单，如灵活的扩缩容能力，故障节点自动恢复，社区提供的支持更好
    2. 分布式更强，支持事务和幂等性导入数据，物化视图自动聚合，查询自动路由，全面元数据管理
 

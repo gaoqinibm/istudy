@@ -43,7 +43,7 @@
     窗口和时间是Flink中的核心概念之一。在实际生产环境中，对数据流上的聚合需要由窗口来划定范围，
     比如“计算过去的5分钟”或者“最后100个元素的和”。
 
-    Flink 支持了多种窗口模型比如滚动窗口（Tumbling Window）、滑动窗口（Sliding Window）及会话窗口（Session Window）等。
+    Flink支持了多种窗口模型比如滚动窗口（Tumbling Window）、滑动窗口（Sliding Window）及会话窗口（Session Window）等。
 
     下图展示了 Flink 支持的多种窗口模型：
 ![Alt text](../doc/窗口.jpg)

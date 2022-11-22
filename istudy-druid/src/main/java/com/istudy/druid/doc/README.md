@@ -1,9 +1,9 @@
 ## Druid简介
-    阿里巴巴也曾创建过一个开源项目叫 Druid （简称阿里 Druid），它是一个数据库连接池项目。阿里 Druid 和 我们要讨论的
-    Druid 没有任何关系，它们解决完全不同的问题
+    阿里巴巴也曾创建过一个开源项目叫Druid（简称阿里Druid），它是一个数据库连接池项目。阿里Druid和我们要讨论的
+    Druid没有任何关系，它们解决完全不同的问题
     Apache Druid是一个分布式内存实时分析系统，用于解决如何在大规模数据集下快速的、交互式的查询和分析问题。
 
-### Druid 对比其他OLAP
+### Druid对比其他OLAP
     Druid vs Elasticsearch
 
     Druid在导入过程会对原始数据进行Rollup，而ES会保存原始数据
