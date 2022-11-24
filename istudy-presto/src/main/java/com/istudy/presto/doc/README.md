@@ -11,7 +11,7 @@
     Presto采用典型的master-slave模型：
     1.coordinator(master)负责meta管理,worker管理，query的解析和调度
     2.worker则负责计算和读写。
-    3.discovery server， 通常内嵌于coordinator节点中，也可以单独部署，用于节点心跳。在下文中，默认discovery和coordinator共享一台机器。
+    3.discovery server，通常内嵌于coordinator节点中，也可以单独部署，用于节点心跳。在下文中，默认discovery和coordinator共享一台机器。
 
 ### 数据模型
     presto采取三层表结构：
