@@ -158,7 +158,7 @@
     可以为超大规模数据管理提供高性价比的通用计算平台，并广泛地用于支撑各类数据仓库系统、BI系统和决策支持系统
 
 ### shared nothing架构
-    Shared nothing(SN)架构（shared nothing architecture）是一种分布式计算架构。这种架构中的每一个节点（ node）都是独立、自给的，而且整个系统中没有单点竞争。
+    Shared nothing(SN)架构（shared nothing architecture）是一种分布式计算架构。这种架构中的每一个节点（node）都是独立、自给的，而且整个系统中没有单点竞争。
     在一个纯Shared Nothing系统中，通过简单地增加一些廉价的计算机做为系统的节点却可以获取几乎无限的扩展。
     Shared nothing系统通常需要将他的数据分布在多个节点的不同数据库中（不同的计算机处理不同的用户和查询）或者要求每个节点通过使用某些协调协议来保留它自己的应用程序数据备份 ，这通常被成为数据库Sharding。
 

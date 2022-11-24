@@ -166,3 +166,6 @@
     当HregionServer宕机后，将HregionServer上的hlog拆分，然后分配给不同的HregionServer加载，修改.META.；
     注意：HLog会同步到HDFS。
 
+### HBase架构
+    HBase是典型的主备结构，主节点是HMaster，从节点是RegionServer。
+![Alt text](../doc/HBase系统架构图.jpg)

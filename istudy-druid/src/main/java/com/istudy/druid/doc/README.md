@@ -6,7 +6,7 @@
 ### Druid对比其他OLAP
     Druid vs Elasticsearch
 
-    Druid在导入过程会对原始数据进行Rollup，而ES会保存原始数据
+    Druid在导入过程会对原始数据进行Rollup(汇总)，而ES会保存原始数据
     Druid专注于OLAP，针对数据导入以及快速聚合操作做了优化
     Druid不支持全文检索
 >
