@@ -49,7 +49,7 @@
     Doris的join性能比较好，ck的单表查询性能好。
 
 ### Clickhouse VS Doris
-ch优点：
+ck优点：
 查询速度快，利用多核并行处理单个查询
 
 列式存储+压缩，节省空间
