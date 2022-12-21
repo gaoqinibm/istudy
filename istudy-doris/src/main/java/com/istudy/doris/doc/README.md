@@ -9,7 +9,7 @@
 ### Doris整体架构
 ![Alt text](../doc/Doris整体架构.jpg)
 
-    Doris的整体架构和TiDB 类似，借助MySQL协议，用户使用任意MySQL的ODBC/JDBC以及MySQL的客户端，
+    Doris的整体架构和TiDB类似，借助MySQL协议，用户使用任意MySQL的ODBC/JDBC以及MySQL的客户端，
     都可以直接访问Doris。Doris中的模块包括FE和BE两类：FE主要负责元数据的管理、存储，以及查询的解析等；
     一个用户请求经过FE解析、规划后，具体的执行计划会发送给BE，BE则会完成查询的具体执行。
     BE节点主要负责数据的存储、以及查询计划的执行。目前平台的FE部分主要使用Java，BE部分主要使用C++。
