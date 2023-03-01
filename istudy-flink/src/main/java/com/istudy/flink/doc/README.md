@@ -7,7 +7,11 @@
     已经基本都是用DataStream来代替DataSet来使用了。在此之上就是Table API，可以像操作数据库表一样来进行关联、
     统计、聚合等操作。最上层就是我们比较熟悉的SQL语句了，可以用简单的SQL语句完成数据的处理操作
 
-## Flink Join实现
+## Flink Join实现机制
+    Flink是通过State状态来缓存等待join的实时流
+    Flink双流JOIN主要分为两大类。一类是基于原生State的Connect算子操作，另一类是基于窗口的JOIN操作。其中基于窗口的JOIN可细分为window join和interval join两种。
+    实现原理：底层原理依赖Flink的State状态存储，通过将数据存储到State中进行关联join, 最终输出结果。
+![Alt text](../doc/join实现机制.jpg)
 
 ## Flink实现了高吞吐，低延迟，高性能兼具实时流式计算框架。
 
