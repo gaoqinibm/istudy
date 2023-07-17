@@ -65,6 +65,7 @@
         <module>架构方向</module>
         <module>设计模式</module>
         <module>配置中心</module>
+        <module>istudy-project</module>
     </modules>
 
     <properties>
