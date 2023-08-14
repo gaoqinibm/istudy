@@ -139,3 +139,4 @@
     Flink架构也遵循Master-Slave架构设计原则， JobManager为Master节点，TaskManager为Worker（Slave）节点。
     所有组件之间的通信都是借助于Akka Framework，包括任务的状态以及Checkpoint触发等信息。
 
+## flink使用场景中的问题总结
