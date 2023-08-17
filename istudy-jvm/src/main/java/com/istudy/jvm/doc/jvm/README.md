@@ -29,3 +29,47 @@
     这样便可以防止核心API库被随意篡改。
     
     这种双亲委派模式的好处，一个可以避免类的重复加载，另外也避免了java的核心API被篡改
+
+## tomcat为什么要打破双亲委派
+    在某些情况下，Tomcat（Apache Tomcat）需要打破双亲委派机制，主要是为了解决类加载的灵活性和可定制性的需求。
+    Tomcat引入了类加载器的分级机制，打破了双亲委派机制。在Tomcat中，每个Web应用程序都有自己的Web应用类加载器（WebAppClassLoader），
+    它负责加载应用程序的类和资源。Web应用类加载器在加载类时会先检查自己是否已加载，如果未加载则尝试加载，而不委派给父加载器。
+
+    通过打破双亲委派机制，Tomcat能够实现以下优势：
+    隔离性：每个Web应用程序拥有独立的类加载器，可以隔离类加载的命名空间，避免类冲突问题。
+    动态更新：每个Web应用程序的类加载器可以独立加载和重新加载类定义，实现应用程序的热部署和动态更新。
+    可定制性：Tomcat的类加载器机制允许开发人员自定义类加载器，实现特定的类加载策略，满足应用程序的特殊需求。
+    需要注意的是，打破双亲委派机制也带来了一些潜在的风险和问题，例如可能引入类加载的混乱和不确定性，增加应用程序开发和维护的复杂性。
+    因此，在开发和部署Web应用程序时，需要谨慎处理类加载器的使用，避免引入潜在的问题。
+
+### jvm栈帧介绍
+    栈帧定义：当线程执行到某个方法时就会往方法线程栈中压入一个帧，称为栈帧，栈帧中包含了方法的局部变量表、操作数栈、返回地址、动态连接、一些附加信息
+    |.局部变量表 包含boolean、byte、char、short、int、float、reference和returnAddress八种
+    ||.操作数栈 表示函数表达式
+    |||.动态链接 表示对常量池常量的引用
+    ||||.方法返回地址 表示方法正常返回的地址以及异常返回
+
+    栈帧的大小主要由函数的参数和局部变量决定，参数和局部变量越多，使得局部变量表膨胀，它的栈帧就越大，以满足方法调用所需传递的信息增大的需求。
+
+### 常见的jvm参数
+    -XX:MaxTenuringThreshold：对象晋升老年代的阈值，默认值15（并不是绝对的，如果在Survivor空间中相同年龄所有对象大小的综合大于Survivor空间的一半，年龄大于或等于该年龄的对象就可以直接进入老年代）
+    -XX:MaxPermSize~~：永久代大小
+    -XX:MaxDirectMemorySize：直接内存大小，默认与-Xmx一致
+    -XX:+/-UseTLAB：是否开启TLAB
+    -XX:MaxMetaspace=256m：元数据区，默认为无限大，受Java进程所使用的内存影响
+    -XX:FieldsAllocationStyle：对象内存分布中的实例数据区域的存储顺序
+    -XX:CompactFields=true：由于HotSpot在分配对象实例数据时相同大小的字段总是被分配到一起存储，在满足这个条件下因此父类中定义的变量会出现在子类之前，开启此参数那子类中较小的变量也允许插入父类变量的空隙中，以节省一点空间
+    -XX:+UseCondCardMark：是否开启JVM卡表条件判断，尽量减少伪共享带来的性能损耗
+    -XX:MaxGCPauseMillis（毫秒 >0）：控制最大垃圾收集停顿时间，默认值200
+    -XX:ParallelGCThreads=NUM：垃圾收集并行执行线程数，默认为CPU的核数
+    -XX：+UseAdaptiveSizePolicy：是否开启自适应调节策略，JDK8默认开启
+    -XX：SurvivorRatio：Eden和Survivor区的比例
+    -XX：PretenureSizeThreshold：晋升老年代对象大小，超过指定大小直接在老年代分配，默认为0
+    -XX:+PrintGCDetails：打印GC详细日志
+    -XX:+PrintHeapAtGC：打印每次GC前后堆、方法区可用容量变化
+    -XX:+PrintGCApplicationConcurrentTime ：查看GC过程中用户线程并发时间
+    -XX:+PrintGCApplicationStoppedTime：查看GC过程中用户线程停顿时间
+    -XX:+PrintFlagsFinal：查看JVM参数的默认值
+
+
+

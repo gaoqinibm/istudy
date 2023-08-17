@@ -169,3 +169,55 @@
     我们常说的 Sharding 其实就是Share Nothing架构，它是把某个表从物理存储上被水平分割，并分配给多台服务器（或多个实例），每台服务器可以独立工作，具备共同的schema，比如MySQL Proxy和Google的各种架构，只需增加服务器数就可以增加处理能力和容量。
 
 ### clickhouse二级索引和主索引
+
+### clickhouse数据迁移方案
+1.拷贝数据目录
+把data和metadata目录复制到新集群，即可实现数据迁移
+
+2.使用remote表函数
+ClickHouse 除了查询常规的表，还能使用表函数来构建一些特殊的「表」，其中remote 函数可用于查询另一个 ClickHouse 的表。
+SELECT * FROM remote('addresses_expr', db, table, 'user', 'password') LIMIT 10;
+因此，可以借助这个功能实现数据迁移：
+INSERT INTO <local_database>.<local_table>
+SELECT * FROM remote('remote_clickhouse_addr', <remote_database>, <remote_table>, '<remote_user>', '<remote_password>')
+操作流程
+1.在源集群的system.tables表查询出数据库、表、DDL、分区、表引擎等信息
+2.在目标集群上，运行 DDL 创建表，然后运行上述迁移语句复制数据
+3.遍历所有表，执行 2
+
+3.使用 clickhouse-copier
+Clickhouse-copier是 ClickHouse 官方提供的一款数据迁移工具，可用于把表从一个集群迁移到另一个（也可以是同一个）集群。
+Clickhouse-copier 使用 Zookeeper 来管理同步任务，可以同时运行多个 clickhouse-copier 实例。
+使用方式:
+clickhouse-copier --daemon --config zookeeper.xml --task-path /task/path --base-dir /path/to/dir
+其中--config zookeeper.xml是 Zookeeper 的连接信息，--task-path /task/path是 Zookeeper 里任务配置的节点路径。
+在使用时，需要先定义一个 XML 格式的任务配置文件，上传到/task/path/description里。同步任务是表级别的，可以配置的内容还比较多。
+Clickhouse-copier 可以监听/task/path/description的变化，动态加载新的配置而不需要重启。
+
+操作流程
+1.创建zookeeper.xml
+2.创建任务配置文件，格式见官方文档，每个表都要配置（可使用代码自动生成）
+3.把配置文件内容上传到 Zookeeper
+4.启动 clickhouse-copier 进程
+理论上 clickhouse-copier 运行在源集群或目标集群的环境都可以，官方文档推进在源集群，这样可以节省带宽。
+
+4.使用 clickhouse-backup
+clickhouse-backup是社区开源的一个 ClickHouse 备份工具，可用于实现数据迁移。其原理是先创建一个备份，然后从备份导入数据，
+类似 MySQL 的 mysqldump + SOURCE。这个工具可以作为常规的异地冷备方案，不过有个局限是只支持 MergeTree 系列的表。
+
+操作流程
+1.在源集群使用clickhouse-backup create创建备份
+2.把备份文件压缩拷贝到目标集群
+3.在目标集群使用clickhouse-backup restore恢复
+
+对比
+![Alt text](../doc/迁移工具对比.jpg)
+
+### clickhouse监控和告警
+    Clickhouse 集群监控(Prometheus+Grafana)
+
+### 在 ClickHouse 部署方案中，ZooKeeper 主要扮演了以下4个角色：
+    1.元数据存储：ZooKeeper 存储了 ClickHouse 集群的元数据，包括表结构、分片配置、副本配置等。当 ClickHouse 集群中的节点需要获取或更新这些信息时，它们会与 ZooKeeper 交互。
+    2.分布式锁：当 ClickHouse 集群中的多个节点需要对同一份数据进行写入操作时，ZooKeeper 提供了分布式锁服务，确保了数据的一致性和完整性。
+    3.副本同步：在 ClickHouse 的分布式表中，数据会被分片并在多个副本之间复制。ZooKeeper 负责协调这些副本之间的同步，确保所有副本都有最新的数据。
+    4.故障检测和恢复：ZooKeeper 可以监控 ClickHouse 集群中的节点状态，当某个节点发生故障时，ZooKeeper 可以协调其他节点进行故障恢复，例如重新分配该节点的分片和副本。

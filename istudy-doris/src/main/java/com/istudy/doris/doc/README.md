@@ -83,3 +83,7 @@ ClickHouse更优的方面
 ### doris为什么join性能好
    没有标准答案：从doris架构方面解释
 
+### Doris监控和告警
+   可以使用 Prometheus 和 Grafana 进行监控和采集
+
+

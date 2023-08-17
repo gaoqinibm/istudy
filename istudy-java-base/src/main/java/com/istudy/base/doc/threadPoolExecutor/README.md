@@ -30,7 +30,7 @@
                 - AbortPolicy 丢弃任务，抛运行时异常
                 - CallerRunsPolicy 执行任务
                 - DiscardPolicy 忽视，什么都不会发生
-                - DiscardOldestPolicy 从队列中踢出最先进入队列（最后一个执行）的任务
+                - DiscardOldestPolicy 从队列中踢出最先进入队列（最后一个执行）的任务。DiscardOldestPolicy是一种简单的拒绝策略,它将丢弃最近提交的任务,以使线程池腾出一个位置来执行当前的任务。这种策略可以确保当前任务得到执行
             * 实现RejectedExecutionHandler接口，可自定义处理器
         
 ## ThreadPoolExecutor执行顺序
