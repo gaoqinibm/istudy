@@ -217,7 +217,7 @@
     Clickhouse 集群监控(Prometheus+Grafana)
 
 ### 在 ClickHouse 部署方案中，ZooKeeper 主要扮演了以下4个角色：
-    1.元数据存储：ZooKeeper 存储了 ClickHouse 集群的元数据，包括表结构、分片配置、副本配置等。当 ClickHouse 集群中的节点需要获取或更新这些信息时，它们会与 ZooKeeper 交互。
-    2.分布式锁：当 ClickHouse 集群中的多个节点需要对同一份数据进行写入操作时，ZooKeeper 提供了分布式锁服务，确保了数据的一致性和完整性。
-    3.副本同步：在 ClickHouse 的分布式表中，数据会被分片并在多个副本之间复制。ZooKeeper 负责协调这些副本之间的同步，确保所有副本都有最新的数据。
-    4.故障检测和恢复：ZooKeeper 可以监控 ClickHouse 集群中的节点状态，当某个节点发生故障时，ZooKeeper 可以协调其他节点进行故障恢复，例如重新分配该节点的分片和副本。
+    1.元数据存储：ZooKeeper存储了ClickHouse集群的元数据，包括表结构、分片配置、副本配置等。当ClickHouse集群中的节点需要获取或更新这些信息时，它们会与ZooKeeper交互。
+    2.分布式锁：当ClickHouse集群中的多个节点需要对同一份数据进行写入操作时，ZooKeeper提供了分布式锁服务，确保了数据的一致性和完整性。
+    3.副本同步：在ClickHouse的分布式表中，数据会被分片并在多个副本之间复制。ZooKeeper负责协调这些副本之间的同步，确保所有副本都有最新的数据。
+    4.故障检测和恢复：ZooKeeper可以监控ClickHouse集群中的节点状态，当某个节点发生故障时，ZooKeeper可以协调其他节点进行故障恢复，例如重新分配该节点的分片和副本。
