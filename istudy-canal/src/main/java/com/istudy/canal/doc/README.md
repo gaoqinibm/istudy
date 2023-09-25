@@ -15,3 +15,6 @@
     #canal相关配置
     canal.mq.maxRequestSize = 104857600  #调大可接收消息体大小
     canal.mq.compressionType = lz4  #开启消息体压缩功能
+
+## canal二次开发
+    canal实现mysql数据同步到redis
