@@ -3,7 +3,7 @@
 ![Alt text](../doc/字段类型对比.png)
 
 ### clickhouse数据类型
-    数据类型没有boolean其他基本和hive一样,详细的看官网 https://clickhouse.tech/docs/en/sql-reference/data-types/int-uint/
+    数据类型没有boolean类型，其他基本和hive一样
 
 ### clickhouse引擎
     clickhouse有很多引擎,最常用的是MergeTree家族 还有Distributed引擎
