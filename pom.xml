@@ -67,6 +67,7 @@
         <module>配置中心</module>
         <module>项目总结</module>
         <module>istudy-project</module>
+        <module>大数据平台开发</module>
     </modules>
 
     <properties>
