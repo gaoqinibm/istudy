@@ -207,6 +207,11 @@
 
 ## 元数据管理
     Atlas - 开源的数据治理和元数据管理平台
+    Apache Atlas
+    Apache Atlas是Hadoop社区为解决Hadoop生态系统的元数据治理问题而产生的开源项目，它为Hadoop集群提供了包括数据分类、集中策略引擎、数据血缘、安全和生命周期管理在内的元数据治理核心能力。官方插件支持HBase、Hive、Sqoop、Storm、Storm、Kafka、Falcon组件。
+    Hook在运行时采集血缘数据，发送到Kafka。Atlas消费Kafka数据，将关系写到图数据库JanusGraph，并提供REST API。
+    其中Hive Hook支持表和列级别血缘，Spark需要使用GitHub的hortonworks-spark/spark-atlas-connector，不支持列级别，Presto则不支持。
+![Alt text](../doc/Hive_Hook.jpg)
 
 ## 数据建模方式
     当前主流建模方法为：ER模型、维度模型。
@@ -239,3 +244,12 @@
     数据统计法
     数据挖掘法
     数据质量框架法
+
+## 数据管理软件
+### 元数据管理
+
+### 数据质量管理
+
+### 数据标准管理
+
+### 数据资产盘点
