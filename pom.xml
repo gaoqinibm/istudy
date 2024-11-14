@@ -60,13 +60,14 @@
         <module>istudy-tomcat</module>
         <module>istudy-yarn</module>
         <module>istudy-zookeeper</module>
+        <module>istudy-project</module>
+        <module>istudy-tidb</module>
         <module>人工智能</module>
         <module>平台和中台</module>
         <module>架构方向</module>
         <module>设计模式</module>
         <module>配置中心</module>
         <module>项目总结</module>
-        <module>istudy-project</module>
         <module>大数据平台开发</module>
     </modules>
 
