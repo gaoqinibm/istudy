@@ -204,3 +204,16 @@ top -p xxxx
     Spark Streaming为了实现反压这个功能，在原来的架构基础上构造了一个“速率控制器”，这个“速率控制器”会根据几个属性，如任务的结束时间、处理时长、处理消息的条数等计算一个速率。在实现控制数据的接收速率中用到了一个经典的算法，即“PID 算法”。
     Flink没有使用任何复杂的机制来解决反压问题，Flink在数据传输过程中使用了分布式阻塞队列。我们知道在一个阻塞队列中，当队列满了以后发送者会被天然阻塞住，这种阻塞功能相当于给这个阻塞队列提供了反压的能力。
 
+### 内存预估参数
+    jobmanager.memory.process.size=2048 JobManager JVM堆大小。该值需带一个大小单位（b/kb/mb/gb/tb）。
+    taskmanager.memory.process.size=4096 TaskManager JVM堆大小。该值需带一个大小单位（b/kb/mb/gb/tb）。
+    taskmanager.numberOfTaskSlots=2    单TaskManager可运行的并行任务或用户功能实例数量。建议与核数一致
+    
+    基于yarn集群计算内存和cpu核心数
+    内存值：taskmanager.memory.process.size * 节点数 * slot数目
+    CPU值：default-parallelism 之和
+
+### 任务槽和并行度区别
+    任务槽是静态概念，是指taskManager具有的并发执行能力，配置参数taskmanager.numberOfTaskSlots 即可
+    并行度是动态概念，是指taskManager运行程序时实际使用的并发能力，配置参数parallelism.default 即可
+    举例说明：假设一共有3个taskManager，每一个taskManager中的solt数量设置为3个，那么一共有哦9个task slot，表示集群最多能并发执行9个算子
