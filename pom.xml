@@ -62,6 +62,7 @@
         <module>istudy-zookeeper</module>
         <module>istudy-project</module>
         <module>istudy-tidb</module>
+        <module>istudy-sql</module>
         <module>人工智能</module>
         <module>平台和中台</module>
         <module>架构方向</module>
