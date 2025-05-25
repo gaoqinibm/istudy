@@ -168,5 +168,15 @@ export JAVA_HOME=/usr/local/java/jdk1.8.0_451
 + 2.权限问题：确保所有节点上的hadoop目录权限一致
 + 3.SSH连接问题：检查/etc/hosts和SSH配置
 + 4.Java路径问题：确认JAVA_HOME设置正确
+  
++ ````
+  启动hdfs报错：Attempting to operate on hdfs namenode as root but there is no HDFS NAMENODE USER defined.
+  在 vim /etc/profile 文件添加即可
+  export HDFS_NAMENODE_USER=root
+  export HDFS_DATANODE_USER=root
+  export HDFS_SECONDARYNAMENODE_USER=root
+  export YARN_RESOURCEMANAGER_USER=root
+  export YARN_NODEMANAGER_USER=root
+  ````
 
   通过以上步骤，您应该能够成功搭建一个基本的Hadoop YARN集群。根据实际需求，您可能需要进一步调整配置参数以优化集群性能。
