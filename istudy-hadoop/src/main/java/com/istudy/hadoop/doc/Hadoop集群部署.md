@@ -194,7 +194,7 @@ export JAVA_HOME=/usr/local/java/jdk1.8.0_451
     YARN（Yet Another Resource Negotiator）是Hadoop的资源管理和调度框架，它通过Container来抽象和管理资源。Container是一个虚拟化的资源单位，包含了CPU、内存和磁盘等计算资源。当Flink任务提交到YARN时，YARN会为Flink分配一个或多个Container来运行任务
     具体来说，当Flink任务运行在YARN上时，Flink客户端会首先检查所需的资源是否可用，然后上传Flink的配置和JAR文件到HDFS。接着，客户端向ResourceManager请求一个YARN容器来启动ApplicationMaster（AM）。JobManager和AM运行在同一个容器中，一旦启动成功，AM会为TaskManager生成新的Flink配置文件，并上传到HDFS。AM容器还提供Flink的Web界面服务
     AM负责向YARN申请资源，YARN分配Container给TaskManager。TaskManager向JobManager注册后，开始接收并执行任务。当TaskManager发生故障时，YARN会自动重启故障节点上的Container，从而实现高可用和自动故障恢复
-
+![Alt text](../doc/提交任务流程.jpg)
 ### 踩坑记录
     Flink on Yarn 只需要部署一个节点 -- 在master中部署即可
     1.yarn-session模式需要先启动服务
