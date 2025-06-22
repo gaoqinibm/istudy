@@ -56,7 +56,7 @@ export JAVA_HOME=/usr/local/java/jdk1.8.0_451
 使环境变量生效：   
 source /etc/profile
 ````
-4. 配置Hadoop核心文件
+4. 配置Hadoop核心文件(可参考 https://blog.csdn.net/qq_43192537/article/details/100943468)
 1) hadoop-env.sh
 ````
 cd $HADOOP_HOME/etc/hadoop
