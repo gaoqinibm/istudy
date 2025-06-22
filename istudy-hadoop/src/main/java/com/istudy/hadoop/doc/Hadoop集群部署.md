@@ -195,6 +195,14 @@ export JAVA_HOME=/usr/local/java/jdk1.8.0_451
     具体来说，当Flink任务运行在YARN上时，Flink客户端会首先检查所需的资源是否可用，然后上传Flink的配置和JAR文件到HDFS。接着，客户端向ResourceManager请求一个YARN容器来启动ApplicationMaster（AM）。JobManager和AM运行在同一个容器中，一旦启动成功，AM会为TaskManager生成新的Flink配置文件，并上传到HDFS。AM容器还提供Flink的Web界面服务
     AM负责向YARN申请资源，YARN分配Container给TaskManager。TaskManager向JobManager注册后，开始接收并执行任务。当TaskManager发生故障时，YARN会自动重启故障节点上的Container，从而实现高可用和自动故障恢复
 ![Alt text](../doc/提交任务流程.jpg)
+
+### Flink 提交任务流程
+1.JobManager 启动：用户提交 Flink 作业后，Flink 会在 YARN 上启动 JobManager。
+2.请求资源：JobManager 向 YARN ResourceManager 申请资源。
+3.容器启动：YARN 分配容器（Container），并通知 JobManager。
+4.TaskManager 启动：JobManager 在容器中启动 TaskManager。
+5.任务执行：TaskManager 按照 JobManager 指挥执行具体的数据处理任务。
+![Alt text](../doc/提交任务底层执行流程.jpg)
 ### 踩坑记录
     Flink on Yarn 只需要部署一个节点 -- 在master中部署即可
     1.yarn-session模式需要先启动服务
