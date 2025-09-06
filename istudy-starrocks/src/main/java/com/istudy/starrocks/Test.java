@@ -1,4 +1,4 @@
-package com.istudy.doris;
+package com.istudy.starrocks;
 
 /**
  * @Deacription TODO
