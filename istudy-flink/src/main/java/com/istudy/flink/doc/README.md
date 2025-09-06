@@ -217,3 +217,44 @@ top -p xxxx
     任务槽是静态概念，是指taskManager具有的并发执行能力，配置参数taskmanager.numberOfTaskSlots 即可
     并行度是动态概念，是指taskManager运行程序时实际使用的并发能力，配置参数parallelism.default 即可
     举例说明：假设一共有3个taskManager，每一个taskManager中的solt数量设置为3个，那么一共有哦9个task slot，表示集群最多能并发执行9个算子
+
+### Flink提供了三种开箱即用的状态存储方式
+    MemoryStateBackend 内存存储
+    FsStateBackend 文件系统存储
+    RocksDBStateBackend RocksDB存储
+    如果没有特殊配置，系统默认使用内存存储方式。
+
+### 关键参数记录
+    state.backend: filesystem 或 rocksdb
+    state.checkpoints.compress: true
+    state.checkpoints.num-retained: 3
+    state.checkpoints.dir: file:///usr/local/flink/flink-1.19.1/checkpoints
+    state.checkpoints.dir: hdfs://namenode-host:8020/flink/checkpoints
+    
+    heartbeat.timeout: 180000
+    heartbeat.interval: 5000
+    
+    restart-strategy: fixed-delay
+    restart-strategy.fixed-delay.attempts: 10
+    restart-strategy.fixed-delay.delay: 30s
+
+### TaskManager、Solt和 Parallelism 关系
+    solt：把 slot 看做 cpu 的核一个slot一可以并行跑很多作业
+    并发度：一个算子有多少个运行实例
+    关系： slot数 = 最大并发度、一个slot一可以同时运行不同算子的一个实例。
+    
+    TaskManager 数量=3、Jobmanager 数量=1
+    算子并行度=2、每个 TM 的 solt 数量=1
+    
+    TaskManager 的内存和cpu 如下：2GB、1core
+    JobManager 的内存和cpu 如下： 1GB、1core
+    
+    那么总的资源消耗是
+    内存总量= 32+1 = 7GB
+    cpu 总量= 31 + 1 =4core
+    
+    每个 solt 分到的内存资源 = 2/1=2GB
+    每个 solt 分到的cpu 资源 = 1/1=1core
+
+    如果算子并行度为30，每个TM的slot数量设置为4，那么TM数量=30/4（向上取整）= 8 个，显然这种情况会有2个slot被浪费了，所以可以将并行度设置为32。
+    slot和TM的数量不都是越多越好，TM过多会增加TM之间数据交换的开销，过少如果集中访问state会导致磁盘开销过大。

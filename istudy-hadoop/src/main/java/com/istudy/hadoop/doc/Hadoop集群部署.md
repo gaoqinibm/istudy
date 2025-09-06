@@ -257,6 +257,7 @@ export JAVA_HOME=/usr/local/java/jdk1.8.0_451
    hdfs dfs -rm /user/xx     删除文件
    hdfs dfs -rm -r /user/xx     删除文件夹
    hdfs dfs -put /source/xx /target/xx  源路径拷贝至目标路径
+   hdfs dfs -ls hdfs://<namenode>:8020/
    ````
 
 ### 参数调优

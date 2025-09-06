@@ -4,6 +4,9 @@
 ### Flink+Paimon+Starrocks选型优势
 ![Alt text](../doc/技术选型.jpg)
 
+### catalog 介绍
+    通过CataLog的方式将远程或本地的数据库服务器中的 实例 或 库 映射到用户主机，以方便用户执行各种操作。
+
 ### Starrocks 架构和功能
     StarRocks 的架构设计融合了 MPP 数据库和分布式系统的设计思想，具有极简的架构特点。
     整个系统由前端节点（FE）、后端节点（BE 和 CN）组成。这种设计使得 StarRocks 在部署和维护上更为简单，
@@ -137,4 +140,8 @@
 
 ### RoaringBitmap 去重原理
 参考 https://cloud.tencent.com/developer/article/2564564
+
+### Starrocks修改表字段语法
+    alter table uat2_saasopsnew.deliver_od_process_execution_plan_version add COLUMN last_effective_month varchar(32) comment 'lastEffectiveMonth' after data_version_create_time;
+    alter table uat2_saasopsnew.deliver_od_process_execution_plan_version add COLUMN last_activation_time datetime comment 'lastActivationTime' after last_effective_month;
 

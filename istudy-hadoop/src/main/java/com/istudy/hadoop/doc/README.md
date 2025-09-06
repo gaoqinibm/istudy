@@ -298,4 +298,10 @@ ELSE '字段对不齐，自查确认'
 END
 ) AS '字段类型'
 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'uat2_proj_0181' AND TABLE_NAME='fl_raw_sddi_inventory' AND EXTRA!='VIRTUAL GENERATED' order by ORDINAL_POSITION ASC;
+
+SELECT TABLE_SCHEMA, TABLE_NAME
+FROM information_schema.tables
+WHERE table_schema in (
+'prd2_proj_0208',
+'prd2_proj_0211') AND table_name like '%deliver_task_business_general';
 ````

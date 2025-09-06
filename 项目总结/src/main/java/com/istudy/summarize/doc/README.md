@@ -19,3 +19,37 @@
     
     平台的每个子系统都包含不同的功能，不同功能的模块组合成一个具有实际应用价值的大数据分析平台，实现对各种业务的前瞻性预测和分析，为用户提供统一的决策分析支持，从而更好地突出平台本身的价值。
 
+## 规划
+    1.机器学习重心转spark和flink及底层算法
+    2.数据湖Iceberg和hudi深入，其次 Delta Lake和Apache Atlas，Paimon
+    3.熟悉大模型应用落地，熟练掌握Dify、Olama、通义千问/Deepseek的方案整合
+    
+    Apache Iceberg/Apache Hudi/Apache Paimon + StarRocks 构建Lakehouse，提供极速的数据分析性能，服务多样化的分析场景。
+    
+    湖仓一体（Data Lakehouse）
+    
+    坚持走P系路线
+    java预测模型demo
+    
+    java 机器学习库 Weka、DL4J、Mallet、H2O
+    
+    PPT
+    
+    多模态研究
+    
+    PostgreSQL 和 OceanBase数据库，PolarDB
+    
+    机器学习框架
+    tensorflow，sklearn，sparkml
+    推荐算法，CTR预估
+    机器学习，深度学习，强化学习，金融量化分析
+    
+    Pulsar/Kafka
+    小模型
+    
+    模型训练，模型微调
+    milvus数据库 vLLM
+    
+    开源报表
+    发呆，学习，思考极端问题
+    技术创新很难
