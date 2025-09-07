@@ -1,5 +1,5 @@
 ## Doris简介
-    Apache Doris是一个基于MPP架构的高性能、实时的分析型数据库，以极速易用的特点被人们所熟知，
+    Apache Doris是一个基于MPP架构的高性能、实时分析型数据库，以极速易用的特点被人们所熟知，
     仅需亚秒级响应时间即可返回海量数据下的查询结果，不仅可以支持高并发的点查询场景，也能支持高吞吐的复杂分析场景。
     基于此，Apache Doris能够较好的满足报表分析、即席查询、统一数仓构建、数据湖联邦查询加速等使用场景，
     用户可以在此之上构建用户行为分析、AB实验平台、日志检索分析、用户画像分析、订单分析等应用。
@@ -80,9 +80,21 @@
     1.业务场景复杂数据规模巨大，希望投入研发力量做定制开发，选ClickHouse
     2.希望一站式的分析解决方案，少量投入研发资源，选择Doris
 
-### doris为什么join性能好
-    没有标准答案：从doris架构方面解释
+### Doris中的JOIN物理实现(doris为什么join性能好)
+    Doris支持两种JOIN的物理实现方式：Hash Join和Nest Loop Join。
+    Hash Join： 在右表上根据等值JOIN列构建一个哈希表，左表的数据以流式方式通过该哈希表进行JOIN计算。
+    这种方法的局限性在于它仅适用于等值JOIN条件的情况。
+    Nest Loop Join： 通过两层循环，以左表驱动，对左表的每一行逐一遍历右表的每一行，进行join条件判断。
+    适用于所有JOIN场景，包括处理Hash Join无法胜任的情况，比如涉及大于或小于比较条件的查询，
+    或是需要执行笛卡尔积运算的场景。但相比Hash Join，Nest Loop Join在性能上可能会有所不及。
 
+    Doris Hash Join的实现方式
+    作为分布式MPP数据库，Apache Doris在Hash Join过程中需要进行数据的Shuffle，进行拆分调度，以确保JOIN结果的正确性。以下是几种数据Shuffle方式：
+    Broadcast Join(广播)
+    Partition Shuffle Join(分区)
+    Bucket Shuffle Join(分桶)
+    Colocate Join(共置)
+![Alt text](../doc/四种Shuffle方式对比.jpg)
 ### Doris监控和告警
     可以使用Prometheus和Grafana进行监控和采集
 

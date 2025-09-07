@@ -11,12 +11,32 @@
     ReplacingMergeTree是MergeTree的一个变种，它存储特性完全继承MergeTree，只是多了一个去重的功能。 
     尽管MergeTree可以设置主键，但是primary key其实没有唯一约束的功能。如果你想处理掉重复的数据，
     可以借助这个ReplacingMergeTree。
+    1）去重时机
+    数据的去重只会在合并的过程中出现。合并会在未知的时间在后台进行，所以你无法预先作出计划。有一些数据可能仍未被处理。
+    2）去重范围
+    如果表经过了分区，去重只会在分区内部进行去重，不能执行跨分区的去重。
+    所以 ReplacingMergeTree 能力有限， ReplacingMergeTree 适用于在后台清除重复的数据以节省空间，但是它不保证没有重复的数据出现。
 
     指定表引擎：
     ENGINE = ReplacingMergeTree([ver])
     参数：ver，版本列。版本列的类型为UInt*、Date或DateTime。可选参数。
-    合并的时候，ReplacingTree从所有相同主键的行中选择一行留下：如果ver未指定，选择最后一条。如果指定了ver列，选择ver值最大的版本。
+    合并的时候，ReplacingMergeTree从所有相同主键的行中选择一行留下：如果ver未指定，选择最后一条。如果指定了ver列，选择ver值最大的版本。
 
+    ReplacingMergeTree可以针对相同主键的数据进行去重，它能够在合并分区时删除重复的数据。
+    常使用这种引擎实现真正存储数据,由于是分布式建表的,数据分布在集群的各个机器中,直接查表数据查不全,所以要用到Distributed。
+
+    Distributed相当于视图,不真正存储数据,用来查数据,速度快、数据全。
+    Distributed表引擎是分布式表的代名词，它自身不存储任何数据，数据都分散
+    存储在某一个分片上，能够自动路由数据至集群中的各个节点，所以Distributed表
+    引擎需要和其他数据表引擎一起协同工作。
+    
+    Distributed(cluster_name,database_name,table_name[,sharding_key])
+    各个参数的含义分别如下：
+    cluster_name：集群名称，与集群配置中的自定义名称相对应。
+    database_name：数据库名称
+    table_name：表名称
+    sharding_key：可选的，用于分片的key值，在数据写入的过程中，
+    分布式表会依据分片key的规则，将数据分布到各个节点的本地表。
 ### clickhouse 创建表
 > clickhouse可以创建本地表,分布式表,集群表
 
@@ -37,24 +57,19 @@
     quartly String
     ) ENGINE = ReplicatedMergeTree('/clickhouse/tables/metro/metro_mdw_pcg', '{replica}') PARTITION BY (quartly, pcg_main_cat_id) 
     ORDER BY (storekey, custkey, cardholderkey)
-    
-    ReplicatedMergeTree(复制表)引擎，可以针对相同主键的数据进行去重，
-    它能够在合并分区时删除重复的数据。常使用这种引擎实现真正存储数据,由于是分布式建表的,
-    数据分布在集群的各个机器中,直接查表数据查不全,所以要用到Distributed。
-    
-    Distributed相当于视图,不真正存储数据,用来查数据,速度快、数据全。
-    Distributed表引擎是分布式表的代名词，它自身不存储任何数据，数据都分散
-    存储在某一个分片上，能够自动路由数据至集群中的各个节点，所以Distributed表
-    引擎需要和其他数据表引擎一起协同工作。
-    
-    Distributed(cluster_name,database_name,table_name[,sharding_key])
-    各个参数的含义分别如下：
-    cluster_name：集群名称，与集群配置中的自定义名称相对应。
-    database_name：数据库名称
-    table_name：表名称
-    sharding_key：可选的，用于分片的key值，在数据写入的过程中，
-    分布式表会依据分片key的规则，将数据分布到各个节点的本地表。
-    
+
+    ReplicatedMergeTree定义:
+    ReplicatedMergeTree(复制表)引擎
+    ReplicatedMergeTree 是 MergeTree 的扩展版本，增加了数据复制功能，确保数据在多个节点之间保持一致。
+    使用 ZooKeeper 协调各个副本之间的同步操作。
+
+    ReplicatedMergeTree特点：
+    数据复制：数据会被复制到集群中的多个节点上，保证了数据的高可用性。
+    一致性：通过ZooKeeper实现数据的一致性，确保所有副本上的数据相同。
+    故障恢复：如果某个节点发生故障，可以从其他副本中恢复数据。
+    排序与分区：同样支持排序（ORDER BY）和分区（PARTITION BY），功能与 MergeTree 相同。
+    合并与压缩：也支持后台合并和压缩操作，但会涉及到多个副本间的协调。
+
 ### MergeTree原理
     MergeTree引擎是Clickhouse表引擎中最重要, 最强大的引擎.
     MergeTree引擎族中的引擎被设计用于将大量数据写入表中. 这些数据被快速的写入每个表的每个part, 
@@ -74,6 +89,13 @@
     支持数据采样
     如果必要, 可以在表中设置数据采样方式.
     
+### MergeTree和ReplicatedMergeTree表引擎的区别
+    MergeTree：如果你的应用场景是在单机环境中运行，或者你不需要数据冗余和高可用性，
+    那么MergeTree是一个很好的选择。它提供了高效的写入和查询性能。
+
+    ReplicatedMergeTree：如果你的应用场景是一个分布式系统，并且需要数据冗余和高可用性，
+    那么你应该选择ReplicatedMergeTree。它虽然会有一定的性能开销，但提供了更高的数据安全性和可靠性。
+
 ### clickhouse数据操作
     增加可以使用insert;
     不能修改,也不能指定删除;
@@ -162,7 +184,7 @@
     在一个纯Shared Nothing系统中，通过简单地增加一些廉价的计算机做为系统的节点却可以获取几乎无限的扩展。
     Shared nothing系统通常需要将他的数据分布在多个节点的不同数据库中（不同的计算机处理不同的用户和查询）或者要求每个节点通过使用某些协调协议来保留它自己的应用程序数据备份 ，这通常被成为数据库Sharding。
 
-### 数据库架构设计的三种模式：share nothing , share everythong , share disk
+### 数据库架构设计的三种模式：share nothing , share everything , share disk
     Shared Everthting:一般是针对单个主机，完全透明共享CPU/MEMORY/IO，并行处理能力是最差的，典型的代表SQLServer
     Shared Disk：各个处理单元使用自己的私有 CPU和Memory，共享磁盘系统。典型的代表Oracle Rac， 它是数据共享，可通过增加节点来提高并行处理的能力，扩展能力较好。其类似于SMP（对称多处理）模式，但是当存储器接口达到饱和的时候，增加节点并不能获得更高的性能 。
     Shared Nothing：各个处理单元都有自己私有的CPU/内存/硬盘等，不存在共享资源，类似于MPP（大规模并行处理）模式，各处理单元之间通过协议通信，并行处理和扩展能力更好。典型代表DB2 DPF和Hadoop ，各节点相互独立，各自处理自己的数据，处理后的结果可能向上层汇总或在节点间流转。
