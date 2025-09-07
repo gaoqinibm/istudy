@@ -216,7 +216,7 @@ top -p xxxx
 ### 任务槽和并行度区别
     任务槽是静态概念，是指taskManager具有的并发执行能力，配置参数taskmanager.numberOfTaskSlots 即可
     并行度是动态概念，是指taskManager运行程序时实际使用的并发能力，配置参数parallelism.default 即可
-    举例说明：假设一共有3个taskManager，每一个taskManager中的solt数量设置为3个，那么一共有哦9个task slot，表示集群最多能并发执行9个算子
+    举例说明：假设一共有3个taskManager，每一个taskManager中的solt数量设置为3个，那么一共有9个task slot，表示集群最多能并发执行9个算子
 
 ### Flink提供了三种开箱即用的状态存储方式
     MemoryStateBackend 内存存储

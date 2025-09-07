@@ -197,11 +197,11 @@ export JAVA_HOME=/usr/local/java/jdk1.8.0_451
 ![Alt text](../doc/提交任务流程.jpg)
 
 ### Flink 提交任务流程
-1.JobManager 启动：用户提交 Flink 作业后，Flink 会在 YARN 上启动 JobManager。
-2.请求资源：JobManager 向 YARN ResourceManager 申请资源。
-3.容器启动：YARN 分配容器（Container），并通知 JobManager。
-4.TaskManager 启动：JobManager 在容器中启动 TaskManager。
-5.任务执行：TaskManager 按照 JobManager 指挥执行具体的数据处理任务。
+    1.JobManager 启动：用户提交 Flink 作业后，Flink 会在 YARN 上启动 JobManager。
+    2.请求资源：JobManager 向 YARN ResourceManager 申请资源。
+    3.容器启动：YARN 分配容器（Container），并通知 JobManager。
+    4.TaskManager 启动：JobManager 在容器中启动 TaskManager。
+    5.任务执行：TaskManager 按照 JobManager 指挥执行具体的数据处理任务。
 ![Alt text](../doc/提交任务底层执行流程.jpg)
 ### 踩坑记录
     Flink on Yarn 只需要部署一个节点 -- 在master中部署即可
