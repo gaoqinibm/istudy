@@ -31,27 +31,26 @@
     提供高性能的数据写入和读取，同时支持高效的表管理，具有事务支持和版本控制能力。
     它提供了一种混合的数据湖解决方案，支持批流一体、事务操作以及版本管理。
 #### Hudi
-    Hudi 专注于高效的数据管理和更新，特别适合数据插入、更新和删除操作较频繁的场景。Hudi 能够实
+    Hudi专注于高效的数据管理和更新，特别适合数据插入、更新和删除操作较频繁的场景。Hudi能够实
     现对数据湖中表的增量拉链更新、变更捕获（CDC），并提供了文件级别的索引以加速数据查询。
-    Hudi 主要应用在流数据的实时处理，适合数据的不断更新和流式数据的管理。
+    Hudi主要应用在流数据的实时处理，适合数据的不断更新和流式数据的管理。
 
 ### Hudi、lceberg、Paimon谁才是最佳选择
 #### Apache Hudi
-
     ACID支持：支持ACID事务，确保数据的原子性、一致性、隔离性和持久性。
     Schema变更：支持向后兼容的DDL操作，如添加可选列和删除列。
     性能：在某些场景下，Hudi的读写性能优于Iceberg和Paimon。
     企业支持：得到阿里巴巴、腾讯、字节跳动等大厂的支持。
     适用场景：适用于需要增量数据处理的场景，以及需要高并发写入的场景。
-#### Apache Iceberg
 
+#### Apache Iceberg
     ACID支持：同样支持ACID事务，保证数据的可靠性和一致性。
     Schema变更：支持更广泛的Schema演变，包括添加列、重命名列等。
     性能：虽然在批处理查询性能上可能不如Hudi，但其扩展性强，对其他计算引擎提供了较多的优化空间。
     企业支持：得到了Netflix、Apple等国际大厂的支持，国内也有腾讯、字节等公司的贡献。
     适用场景：更适合于离线数据处理，以及需要高度扩展性和灵活性的场景。
-#### Apache Paimon
 
+#### Apache Paimon
     ACID支持：也支持ACID事务，确保数据的完整性。
     Schema变更：支持有限的schema变更，如添加新列，但不支持删除列。
     性能：在流处理场景下的读写性能优于Hudi和Iceberg。
@@ -68,7 +67,8 @@
 ### 遇到的问题总结
 #### 小文件问题导致的反压/阻塞
     小文件问题基本是所有的大数据存储和计算框架都会遇到的问题，Paimon也不例外。
-    我们以Flink写Paimon举例，在小文件场景中，产生小文件主要有两方面导致，一是进行Checkpoint的时候会强制把当前的WriteBuffer的数据刷到磁盘上，二是WriteBuffer本身满了也会刷到磁盘上。
+    我们以Flink写Paimon举例，在小文件场景中，产生小文件主要有两方面导致，一是进行Checkpoint的时候会强制把
+    当前的WriteBuffer的数据刷到磁盘上，二是WriteBuffer本身满了也会刷到磁盘上。
     所以如果Checkpoint Interval过小，或是WriteBuffer容量设置的过小，数据就会更频繁的被刷到磁盘上，而产生过量的小文件。
     此外Bucket key设置的不合理也会导致过多的小文件，根据阿里和字节分享的多篇实践文章来看，小文件参数设置：
     Checkpoint interval：推荐在1-2min比较合适(这是很多公司的场景给出的推荐参数，但是根据个人实践情况来看，这个频率有些高，实际上3-5min或者更长一点时间更为合理);
@@ -84,7 +84,7 @@
     Flink+Paimon的写优化是一个比较庞大的话题，涉及参数很多，可以优化的点非常多。
     但是我们有一个大致的思路，除了解决小文件过程中的compaction优化。还可以从下面几个方面优化：
     并行度设置上，Paimon的写入并行度与桶数量密切相关，所以sink的并行度最好等于bucket的数量；
-    开启本地合并（Local Merging），在数据按桶分区之前对输入记录进行缓冲和合并，可以从从64MB开始调整，逐步优化；
+    开启本地合并（Local Merging），在数据按桶分区之前对输入记录进行缓冲和合并，可以从64MB开始调整，逐步优化；
     选择合适的文件编码和压缩格式。
 
 #### 内存不足OOM或者GC频繁
@@ -112,31 +112,41 @@
     关联表表的主键和Join Key一致
     如果满足上面条件，Paimon会自动选择部分缓存（Partial Cache）模式。不满足会选择全部缓存(Full Cache)模式。当然full cache会带来冷启动问题。
     
-    此外，在很多云平台产品上都提供了Bucket Shuffle功能，原理是在开启Bucket Shuffle后，会根据Join Key进行Hash分组处理，每个分组中只要缓存对应Bucket 数据，可以极大减少内存用量，减少了缓存淘汰的概率，就可以支持更大规模的维表。
+    此外，在很多云平台产品上都提供了Bucket Shuffle功能，原理是在开启Bucket Shuffle后，会根据Join Key进行Hash分组处理，
+    每个分组中只要缓存对应Bucket 数据，可以极大减少内存用量，减少了缓存淘汰的概率，就可以支持更大规模的维表。
 
 #### FileNotFoundException
-    在读取Paimon表的过程中经常出现的问题之一，原理是Paimon表的Snapshot、Changelog默认过期时间是1小时，如果下游流读的作业延迟超过1小时或者断流超过1 小时，则会有上述报错。可以通过修改snapshot.time-retained增大这个时间。
+    在读取Paimon表的过程中经常出现的问题之一，原理是Paimon表的Snapshot、Changelog默认过期时间是1小时，
+    如果下游流读的作业延迟超过1小时或者断流超过1小时，则会有上述报错。可以通过修改snapshot.time-retained增大这个时间。
 
 #### 写入和查询性能trade off，性能问题
     这是Paimon新版本中解决的一个问题。
-    在Paimon这个框架中(其实不只Paimon，很多框架都有这个问题)，提供了两种模式MOR和COW，MergeOnRead 模式下，更新速度很快，但查询速度较慢；而CopyOnWrite 模式下，更新速度较慢，但查询速度较快。
+    在Paimon这个框架中(其实不只Paimon，很多框架都有这个问题)，提供了两种模式MOR和COW，MergeOnRead模式下，更新速度很快，但查询速度较慢；而CopyOnWrite模式下，更新速度较慢，但查询速度较快。
     这时候问题就来了，如果用户期望写入更新速度快，查询速度也不慢。那该怎么做呢？
     从Paimon的0.8版本开始，引入了Deletion Vectors。一句话总结就是MOR模式下通过写时标记老文件哪些行被删除，实现快速更新，且不影响查询性能。
     如果你同时都写入和查询性能要求都比较高，那么就可以考虑Deletion Vectors了。
 
 #### Flink+Paimon场景中，出现快照或者文件冲突怎么办？报错提示：
     File deletion conflicts detected! Give up committing.
-    在很多情况下，我们需要离线和实时任务写同一个Paimon表，这时候就出现一个问题，离线和实时任务同时会进行compaction+commit，然后就会出现文件冲突。比较推荐的解决方案是，离线和实时任务同时开启write-only=true,单独启动一个任务只执行compaction。
+    在很多情况下，我们需要离线和实时任务写同一个Paimon表，这时候就出现一个问题，离线和实时任务同时会进行compaction+commit，
+    然后就会出现文件冲突。比较推荐的解决方案是，离线和实时任务同时开启write-only=true,单独启动一个任务只执行compaction。
 
 #### 写入Paimon时常见技术问题：如何优化Paimon数据写入性能？
-    在写入Paimon时，如何优化数据写入性能是一个常见技术问题。主要挑战包括数据分片不均、写放大和并发控制。当数据分布不均匀时，可能导致某些分区负载过高，影响整体写入速度。此外，频繁的小批量写入会引发写放大问题，增加磁盘I/O负担。为解决这些问题，可以采取以下措施：调整数据分片策略，确保更均匀的数据分布；通过批量写入减少写操作次数，降低写放大效应；合理设置并发参数，避免因线程竞争导致的性能瓶颈。同时，根据实际业务场景选择合适的压缩算法和存储格式，进一步提升写入效率。这些优化手段能够显著改善Paimon的数据写入性能，满足高吞吐量需求。
+    在写入Paimon时，如何优化数据写入性能是一个常见技术问题。主要挑战包括数据分片不均、写放大和并发控制。
+    当数据分布不均匀时，可能导致某些分区负载过高，影响整体写入速度。此外，频繁的小批量写入会引发写放大问题，
+    增加磁盘I/O负担。为解决这些问题，可以采取以下措施：调整数据分片策略，确保更均匀的数据分布；通过批量写入减少写操作次数，
+    降低写放大效应；合理设置并发参数，避免因线程竞争导致的性能瓶颈。同时，根据实际业务场景选择合适的压缩算法和存储格式，
+    进一步提升写入效率。这些优化手段能够显著改善Paimon的数据写入性能，满足高吞吐量需求。
 
 ### Paimon特性
-    Paimon 支持两种表模式：Primary key 和 Append Only。Append Only 表为仅追加，数据没有版本概念，因此它的流读实现起来比较简单，仅需对比两个快照读取新增文件即可。Primary key 表中同一主键可能有多条数据版本，这多条数据可能存在于不同层级的多个文件中，因此无法通过简单对比快照差异来感知数据在两个相邻快照之间的完整变更。为了解决这个问题 Paimon 的 Primary key 表在写入时支持为 Paimon 表复写一份 Changelog ，下游系统再订阅 Changelog 数据。这很类似数据库的 Binlog 机制。
+    Paimon支持两种表模式：Primary key和Append Only。Append Only表为仅追加，数据没有版本概念，因此它的流读实现起来比较简单，
+    仅需对比两个快照读取新增文件即可。Primary key表中同一主键可能有多条数据版本，这多条数据可能存在于不同层级的多个文件中，
+    因此无法通过简单对比快照差异来感知数据在两个相邻快照之间的完整变更。为了解决这个问题Paimon的Primary key表在写入时支持为
+    Paimon表复写一份Changelog，下游系统再订阅Changelog数据。这很类似数据库的Binlog机制。
 
 ### 湖仓写入性能问题总结
-    Apache Hudi 提供了两种写入模式 COW 和 MOR（Merge On Read），COW 天然存在写入瓶颈，主要使用 MOR 类型。
-    MOR 类型表写入任务并行度和资源资源配置过高，造成资源浪费
+    Apache Hudi提供了两种写入模式COW和MOR（Merge On Read），COW天然存在写入瓶颈，主要使用MOR类型。
+    MOR类型表写入任务并行度和资源配置过高，造成资源浪费
 
 ### RoaringBitmap 去重原理
 参考 https://cloud.tencent.com/developer/article/2564564
@@ -144,4 +154,3 @@
 ### Starrocks修改表字段语法
     alter table uat2_saasopsnew.deliver_od_process_execution_plan_version add COLUMN last_effective_month varchar(32) comment 'lastEffectiveMonth' after data_version_create_time;
     alter table uat2_saasopsnew.deliver_od_process_execution_plan_version add COLUMN last_activation_time datetime comment 'lastActivationTime' after last_effective_month;
-
