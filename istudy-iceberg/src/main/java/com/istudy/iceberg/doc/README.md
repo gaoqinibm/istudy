@@ -8,16 +8,19 @@
     3.数据和元数据的可扩展性–当表增长到数千个分区和数十亿文件的大小时，避免对象存储API和相关元数据的瓶颈。
     
     Hudi
-    Hudi 最初是由 Uber 开源的，它被设计成支持通过列式数据格式进行增量更新。它支持从多个来源摄取数据，主要是Apache Spark 和 Apache Flink。它还提供了一个基于Spark的实用程序（DeltaStreamer）来读取外部资源，如Apache Kafka。
-    支持从 Apache Hive、Apache Impala 和 PrestoDB 读取数据。还有一个专门的工具（HiveSyncTool）可以将Hudi表模式同步到Hive Metastore 中。PS: Hudi 社区也支持 DLA
+    Hudi最初是由Uber开源的，它被设计成支持通过列式数据格式进行增量更新。它支持从多个来源摄取数据，主要是Apache Spark和Apache Flink。
+    它还提供了一个基于Spark的实用程序（DeltaStreamer）来读取外部资源，如Apache Kafka。
+    支持从Apache Hive、Apache Impala和PrestoDB读取数据。还有一个专门的工具（HiveSyncTool）可以将Hudi表模式同步到Hive Metastore 中。PS: Hudi社区也支持DLA
     
     iceberg
-    Iceberg 最初由 Netflix 发布，旨在解决在 S3 上存储大型 Hive-Partitioned 数据集时出现的性能、可扩展性和可管理性挑战。
-    iceberg 支持 Apache Spark 的读和写，包括Spark的结构化流。Trino (PrestoSQL)也支持读取，但对删除的支持有限。同时支持Apache Flink 的读和写。最后，Iceberg 为 Apache Hive 提供了读支持。
+    Iceberg最初由Netflix发布，旨在解决在S3上存储大型Hive-Partitioned数据集时出现的性能、可扩展性和可管理性挑战。
+    iceberg支持Apache Spark的读和写，包括Spark的结构化流。Trino(PrestoSQL)也支持读取，但对删除的支持有限。
+    同时支持Apache Flink的读和写。最后，Iceberg为Apache Hive提供了读支持。
     
     Delta Lake
     Delta Lake是由Databricks（Apache Spark的创建者）作为一个开源项目进行维护，并不奇怪，它与Spark在读写方面都进行了深度集成。
-    使用Hive的SymlinkTextInputFormat为Presto、AWS Athena、AWS Redshift Spectrum和Snowflake提供读取支持。尽管这需要为每个Delta表分区导出一个symlink.txt文件，而且正如你所说，对于较大的表来说，维护成本变得很高。
+    使用Hive的SymlinkTextInputFormat为Presto、AWS Athena、AWS Redshift Spectrum和Snowflake提供读取支持。
+    尽管这需要为每个Delta表分区导出一个symlink.txt文件，而且正如你所说，对于较大的表来说，维护成本变得很高。
 
 ### 应用场景
     Hudi

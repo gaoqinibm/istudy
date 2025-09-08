@@ -9,7 +9,7 @@
 ![Alt text](../doc/导入和导出.jpg)
 
 ## sqoop工作的机制
-    将导入或导出命令翻译成MapReduce程序来实现在翻译出的,MapReduce中主要是对InputFormat和OutputFormat进行定制
+    将导入或导出命令翻译成MapReduce程序来实现,MapReduce中主要是对InputFormat和OutputFormat进行定制
     
 ## 大数据同步工具DataX、Sqoop、Canal之比较
 > 1.Sqoop与DataX

@@ -6,7 +6,6 @@
     ConcurrentHashMap相比HashMap而言，是多线程安全的，其底层数据与HashMap的数据结构相同，数据结构如下:
 ![Alt text](../concurrentHashMap/数据结构.png)
 
-
 ## ConcurrentHashMap为什么高效？
     Hashtable低效主要是因为所有访问Hashtable的线程都争夺一把锁。如果容器有很多把锁，每一把锁控制容器中的一部分数据，
     那么当多个线程访问容器里的不同部分的数据时，线程之前就不会存在锁的竞争，这样就可以有效的提高并发的访问效率。
