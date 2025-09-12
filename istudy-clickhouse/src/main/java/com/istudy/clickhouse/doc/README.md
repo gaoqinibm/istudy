@@ -15,7 +15,7 @@
     数据的去重只会在合并的过程中出现。合并会在未知的时间在后台进行，所以你无法预先作出计划。有一些数据可能仍未被处理。
     2）去重范围
     如果表经过了分区，去重只会在分区内部进行去重，不能执行跨分区的去重。
-    所以 ReplacingMergeTree 能力有限， ReplacingMergeTree 适用于在后台清除重复的数据以节省空间，但是它不保证没有重复的数据出现。
+    所以ReplacingMergeTree能力有限，ReplacingMergeTree适用于在后台清除重复的数据以节省空间，但是它不保证没有重复的数据出现。
 
     指定表引擎：
     ENGINE = ReplacingMergeTree([ver])
@@ -60,14 +60,14 @@
 
     ReplicatedMergeTree定义:
     ReplicatedMergeTree(复制表)引擎
-    ReplicatedMergeTree 是 MergeTree 的扩展版本，增加了数据复制功能，确保数据在多个节点之间保持一致。
-    使用 ZooKeeper 协调各个副本之间的同步操作。
+    ReplicatedMergeTree是MergeTree的扩展版本，增加了数据复制功能，确保数据在多个节点之间保持一致。
+    使用ZooKeeper协调各个副本之间的同步操作。
 
     ReplicatedMergeTree特点：
     数据复制：数据会被复制到集群中的多个节点上，保证了数据的高可用性。
     一致性：通过ZooKeeper实现数据的一致性，确保所有副本上的数据相同。
     故障恢复：如果某个节点发生故障，可以从其他副本中恢复数据。
-    排序与分区：同样支持排序（ORDER BY）和分区（PARTITION BY），功能与 MergeTree 相同。
+    排序与分区：同样支持排序（ORDER BY）和分区（PARTITION BY），功能与MergeTree相同。
     合并与压缩：也支持后台合并和压缩操作，但会涉及到多个副本间的协调。
 
 ### MergeTree原理
