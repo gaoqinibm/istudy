@@ -154,3 +154,15 @@
 ### Starrocks修改表字段语法
     alter table uat2_saasopsnew.deliver_od_process_execution_plan_version add COLUMN last_effective_month varchar(32) comment 'lastEffectiveMonth' after data_version_create_time;
     alter table uat2_saasopsnew.deliver_od_process_execution_plan_version add COLUMN last_activation_time datetime comment 'lastActivationTime' after last_effective_month;
+
+### StarRocks和Doris对比
+    StarRocks和Doris的核心差异在于开源模式与技术路线：
+    Doris是完全开源的社区项目（Apache License 2.0），而StarRocks采用核心开源+高级功能闭源的商业化模式（Elastic License 1.0），两者虽共享MPP架构基础，
+    但StarRocks在复杂查询优化、存算分离及湖仓加速等企业级功能上更具优势，而Doris在物化视图和开源生态上表现突出。
+
+    功能与适用场景‌
+    ‌数据湖分析‌：StarRocks商业版湖仓加速（深度优化Iceberg/Hudi查询）性能更强；Doris社区版支持多数据源Catalog，通过开源技术持续优化。‌
+    ‌企业级功能‌：StarRocks商业版提供细粒度权限、审计、多租户等；Doris所有功能开源，依赖社区支持。‌
+    适用场景‌：
+    Doris‌：预算有限、需完全开源、物化视图加速核心或存算一体场景（如实时数仓宽表构建）。‌
+    StarRocks‌：预算充足、需企业级 SLA、存算分离刚性需求或极致湖查询性能（如金融实时风控、电商动态库存）。
