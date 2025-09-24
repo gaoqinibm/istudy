@@ -72,7 +72,7 @@
     所以如果Checkpoint Interval过小，或是WriteBuffer容量设置的过小，数据就会更频繁的被刷到磁盘上，而产生过量的小文件。
     此外Bucket key设置的不合理也会导致过多的小文件，根据阿里和字节分享的多篇实践文章来看，小文件参数设置：
     Checkpoint interval：推荐在1-2min比较合适(这是很多公司的场景给出的推荐参数，但是根据个人实践情况来看，这个频率有些高，实际上3-5min或者更长一点时间更为合理);
-    WriteBuffer大小：推荐使用默认值，如果你的数据规模比较大，那么可以适当增加增加write-buffer-size或开启write-buffer-spillable选项，这样溢写到HDFS上生成的文件更大。
+    WriteBuffer大小：推荐使用默认值，如果你的数据规模比较大，那么可以适当增加write-buffer-size或开启write-buffer-spillable选项，这样溢写到HDFS上生成的文件更大。
     业务数据量：根据业务数据量调节Bucket数，调整依据为单个Bucket大小在1G左右合适(可以稍高一点)；
     Key的设置：根据实际的业务Key特点设置合适的Bucket-key、Partition，防止热Key倾斜问题；
     Compaction相关参数：优先使用默认值。这里有一个注意的点，生产环境是比较推荐开启异步Compaction的，可以通过下面三个参数开启：
