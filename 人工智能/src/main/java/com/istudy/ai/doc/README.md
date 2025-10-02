@@ -43,3 +43,6 @@
     4. 云原生存储和数据库：基于云环境的分布式存储和数据库解决方案，如云存储服务（如Amazon S3、Google Cloud Storage）和云原生数据库（如Amazon DynamoDB、Google Cloud Spanner）等。
     5. 规模化和弹性：通过云环境提供的资源弹性和自动化调度能力，将应用程序的规模进行动态调整，以满足不同负载和需求。
     6. 监控和日志：通过集中化的监控和日志收集系统，对应用程序进行实时监控、诊断和日志分析。常用的工具包括Prometheus、Grafana、Elasticsearch、Logstash等。
+
+## Text2SQL（NL2sql）
+    Text2SQL（有时也被称为NL2SQL，即Natural Language to SQL）是一种技术或过程，它能够将自然语言的查询语句转换成结构化查询语言（SQL）的命令。
