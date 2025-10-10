@@ -1,4 +1,4 @@
-package com.istudy.spark;
+package com.istudy.flink;
 
 public class Test {
 }
