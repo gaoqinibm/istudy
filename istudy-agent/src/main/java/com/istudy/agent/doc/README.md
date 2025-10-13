@@ -6,7 +6,25 @@
     利用Dify、Langchain、SpringAI等框架和平台
     基于Streamlit+LangChain+DashScope+DeepSeek的智能化数据分析助手
 
-## Dify和Ollama
+    AI核心概念
+    • 提示（Prompt）
+    • 模型增强（The Augmented LLM）
+    • 顾问（Advisors）
+    • 检索（Retrieval）
+    • 记忆（ChatMemory）
+    • 工具（Tool）
+    • 评估（Evaluation）
+    • 可观测性（Observability）
+    • 模型上下文协议（MCP）
+        • MCP 客户端
+        • MCP 服务器
+    • MCP 和安全
+
+    召回率（Recall），也称为灵敏度（Sensitivity）或真正例率（True Positive Rate），是用于评估二分类模型性能的指标之一。召回率衡量了模型正确识别正例的能力，即在所有实际正例中，模型成功识别的比例。
+    召回率的取值范围在0到1之间，值越接近1表示模型在识别正例方面的性能越好。
+
+## Dify和Ollama区别
+    Dify 是一款开源的大语言模型(LLM) 应用开发平台。它融合了后端即服务和 LLMOps 的理念，使开发者可以快速搭建生产级的生成式 AI 应用。
     两个开源工具，结合使用可实现本地部署AI知识库和大型语言模型管理。
     Dify‌：提供AI应用开发平台，支持低代码配置、模型管理及可观察性功能，可快速搭建从开发到生产的完整流程。
     Ollama‌：本地推理框架，可运行OpenAI gpt-oss、DeepSeek等开源语言模型，适用于文本生成、问答等场景。
@@ -29,8 +47,20 @@
 
 #### 自然语言转数据分析的语言代码，即text2Code(即代码解释器方案)
 
+## 私有化方案
+    Ollama+DeepSeek+Dify构建私有AI Agent
 
-基于 Apache Doris Data Agent 智能体平台全面架构如下图所示：
+## AI Agent
+    工作原理：AI Agent 通过生成式 AI 理解用户请求，结合 RAG 获取实时信息，自动分解任务（如查数据→调用 API→反馈结果），最终执行操作并生成响应。
+    
+    应用示例：
+    智能客服：自动处理用户的查询并生成响应。
+    自动化任务执行：根据指令调用外部 API 来完成任务，如预订机票、查询天气等。
+
+    MCP(Model ContextProtocol) 模型上下文协议
+    基于 RAG（检索增强生成） 的 Text2SQL 应用是企业 LLM 应用落地的热门方向之一
+
+## 基于 Apache Doris Data Agent 智能体平台全面架构如下图所示：
 ![Alt text](../doc/智能体架构图.png)
 
     Text2SQL（NL2sql）
