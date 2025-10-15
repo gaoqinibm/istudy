@@ -57,7 +57,7 @@
     智能客服：自动处理用户的查询并生成响应。
     自动化任务执行：根据指令调用外部 API 来完成任务，如预订机票、查询天气等。
 
-    MCP(Model ContextProtocol) 模型上下文协议
+    MCP(Model Context Protocol) 模型上下文协议
     基于 RAG（检索增强生成） 的 Text2SQL 应用是企业 LLM 应用落地的热门方向之一
 
 ## 基于 Apache Doris Data Agent 智能体平台全面架构如下图所示：
