@@ -3,7 +3,7 @@
     模型上下文协议（Model Context Protocol，MCP）通过 MCP 协议，AI Agent 可以实现智能工具调用，根据运维场景自动选择和组合多个监控、诊断、治理工具，形成完整的运维治理工作流。
     MCP 协议支持上下文感知。
 
-    利用Dify、Langchain、SpringAI等框架和平台
+    利用Dify、Langchain(Langchain4J)、SpringAI等框架和平台
     基于Streamlit+LangChain+DashScope+DeepSeek的智能化数据分析助手
 
     AI核心概念
@@ -22,6 +22,16 @@
 
     召回率（Recall），也称为灵敏度（Sensitivity）或真正例率（True Positive Rate），是用于评估二分类模型性能的指标之一。召回率衡量了模型正确识别正例的能力，即在所有实际正例中，模型成功识别的比例。
     召回率的取值范围在0到1之间，值越接近1表示模型在识别正例方面的性能越好。
+
+## LangChain简介
+LangChain就等价于数据库领域的JDBC
+
+为什么要用 Langchain？
+数据连接：Langchain 允许你将大型语言模型连接到你自己的数据源，比如数据库、PDF文件或其他文档。这意味着你可以使模型从你的私有数据中提取信息。
+行动执行：不仅可以提取信息，Langchain 还可以帮助你根据这些信息执行特定操作，如发送邮件。无需硬编码：它提供了灵活的方式来动态生成查询，避免了硬编码的需求。
+
+LangChain‌：适合需要快速接入大模型的Python开发者，支持OpenAI、Anthropic等15+热门模型，适合企业级应用开发。
+LangChain4j‌：适合Java开发者，可接入Gemini、Claude等模型，并通过多代理机制实现混合模型调用，适用于Spring Boot等企业级架构。
 
 ## Dify和Ollama区别
     Dify 是一款开源的大语言模型(LLM) 应用开发平台。它融合了后端即服务和 LLMOps 的理念，使开发者可以快速搭建生产级的生成式 AI 应用。
@@ -58,7 +68,9 @@
     自动化任务执行：根据指令调用外部 API 来完成任务，如预订机票、查询天气等。
 
     MCP(Model Context Protocol) 模型上下文协议
-    基于 RAG（检索增强生成） 的 Text2SQL 应用是企业 LLM 应用落地的热门方向之一
+    基于 RAG（Retrieval-augmented Generation 检索增强生成） 的 Text2SQL 应用是企业 LLM 应用落地的热门方向之一
+
+## Multi-Agent系统（MAS）-多智能体
 
 ## 基于 Apache Doris Data Agent 智能体平台全面架构如下图所示：
 ![Alt text](../doc/智能体架构图.png)
