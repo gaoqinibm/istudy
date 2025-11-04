@@ -89,3 +89,7 @@
     执行与反馈：系统执行SQL查询操作，并返回相应结果，同时可能会对结果进行进一步的解释或分析。
     
     AI+BI——“ChatBI”（智能问数系统）
+
+## agent智能体开发方式
+    纯代码:langchain、llamaindex;langchain4j、spring ai、java
+    低代码:coze、dify、n8n等. 实现方式:1.直接发布 2.使用代码调用生成的智能体
