@@ -1,6 +1,7 @@
 ## Data Agent（数据智能体）
     Data Agent=大模型推理能力+数据处理引擎+业务知识图谱+自主决策机制
-    模型上下文协议（Model Context Protocol，MCP）通过 MCP 协议，AI Agent 可以实现智能工具调用，根据运维场景自动选择和组合多个监控、诊断、治理工具，形成完整的运维治理工作流。
+    模型上下文协议（Model Context Protocol，MCP）通过 MCP 协议，AI Agent 可以实现智能工具调用，
+    根据运维场景自动选择和组合多个监控、诊断、治理工具，形成完整的运维治理工作流。
     MCP 协议支持上下文感知。
 
     利用Dify、Langchain(Langchain4J)、SpringAI等框架和平台
