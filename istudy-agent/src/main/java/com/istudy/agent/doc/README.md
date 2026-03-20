@@ -94,3 +94,7 @@
 ## agent智能体开发方式
     纯代码:langchain、llamaindex;langchain4j、spring ai、java
     低代码:coze、dify、n8n等. 实现方式:1.直接发布 2.使用代码调用生成的智能体
+
+## langchain+ Milvus向量数据库构建知识库
+![Alt text](../doc/RAG实操教程langchain+Milvus向量数据库创建你的本地知识库.png)
+
