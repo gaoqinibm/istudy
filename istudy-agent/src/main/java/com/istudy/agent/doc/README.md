@@ -109,6 +109,9 @@
 ### 知识库初始化——将文档变为向量
     RAG 的第一步是文档"喂"给系统。原始文档 → 文本提取 → 文本分块 → 向量化 → 存入向量库
 
+### RAG 完整流程
+![Alt text](../doc/RAG完整流程.png)
+
 ### RAG 应用，本质上就是三件事
     把文档变成向量——读取、分块、Embedding、存储
     把问题变成答案——检索相关片段，组装 Prompt，调用模型
@@ -118,5 +121,24 @@
     文本分块（按 Token 切分，避免单个块过大）
     关于分块策略：分块大小直接影响检索效果。块太小→上下文不足；块太大→引入噪音。一般建议 500-1000 Token，重叠 10-20%。对于代码文档，建议按函数/类边界切分；对于问答文档，可以按问答对切分。
 
+## Spring AI 和 LangChain4j 区别
+    Agent 编排能力仍弱于 LangChain4j。
 
+## 对话模型（ChatModel）
+    Spring AI聊天记忆之DB存储，实现长期记忆介质:Redis 存储和JDBC存储(适配MySQL、PostgreSQL等数据库)
 
+## 什么是向量（Embedding）
+![Alt text](../doc/向量.png)
+
+## 文档分割策略
+![Alt text](../doc/文档分割策略.png)
+
+## 检索与生成
+![Alt text](../doc/检索与生成.png)
+
+## LangChain4j 框架介绍
+![Alt text](../doc/LangChain4j框架.png)
+
+## 什么是 Ollama
+    Ollama 是一个本地运行大语言模型的工具,Spring Boot 3 集成Spring AI + Ollama(依赖spring-ai-starter-model-ollama) 
+    为企业提供了构建私有化 AI应用的完整解决方案，既保护了数据隐私，又降低了长期运营成本。建议从 7B 量化模型切入，逐步迭代到更复杂的应用场景。
