@@ -57,7 +57,6 @@
         <module>istudy-spring</module>
         <module>istudy-springboot</module>
         <module>istudy-sqoop</module>
-        <module>istudy-tomcat</module>
         <module>istudy-yarn</module>
         <module>istudy-zookeeper</module>
         <module>istudy-project</module>
