@@ -60,7 +60,6 @@
         <module>istudy-yarn</module>
         <module>istudy-zookeeper</module>
         <module>istudy-project</module>
-        <module>istudy-tidb</module>
         <module>istudy-sql</module>
         <module>istudy-starrocks</module>
         <module>istudy-paimon</module>
