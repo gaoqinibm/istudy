@@ -24,6 +24,37 @@
     召回率（Recall），也称为灵敏度（Sensitivity）或真正例率（True Positive Rate），是用于评估二分类模型性能的指标之一。召回率衡量了模型正确识别正例的能力，即在所有实际正例中，模型成功识别的比例。
     召回率的取值范围在0到1之间，值越接近1表示模型在识别正例方面的性能越好。
 
+## AI目前能做的开源项目：RAG、智能体、知识库、智能问数
+
+## Multi-Agent(多智能体系统)
+    多 Agent 系统(Multi-Agent System)就是让多个 AI Agent 各自负责一块,通过分工和协作,完成一个单 Agent 啃不动的复杂任务。
+    多 Agent = 设计出一套"谁负责什么、谁向谁汇报、谁能调用谁" 的协作结构,然后让多个 Agent 在这个结构里运转
+    多Agent Java系统，Spring AI Alibaba是最自然的选择——Java原生、A2A+Nacos服务发现、生产级可观测性。
+    多智能体系统允许多个Agent协同工作，StateGraph 用于构建复杂的有状态工作流。
+    Nacos 3.1.0 引入 A2A 了注册中心功能，提供了轻量化的 Agent 服务注册与发现能力；Spring AI Alibaba 通过集成 Nacos，提供了开箱即用的 Agent 注册、Agent 发现与负载均衡能力，让开发者能够快速构建使用 A2A 标准协议通信的分布式多智能体系统。
+
+## A2A 协议
+    A2A(Agent-to-Agent)是由Google于2025年4月推出的开放协议，定义了不同AI智能体之间相互发现、通信和协作的标准方式。
+    MCP解决Agent调工具，A2A解决Agent找Agent,两者合力让AI智能体真正实现"跨平台协作"。
+    A2A基于HTTP+JSON设计，无需改造现有系统。任何有Web接口的Agent都能快速接入，降低协作门槛。
+![img.png](A2A vs MCP 对比.png)
+![img.png](A2A 协作示意图.png)
+
+## Spring AI Alibaba 中的 Multi-agent 模式
+![img.png](Spring AI Alibaba Multi-agent 模式.png)
+
+## Spring AI Alibaba + Nacos 的实现方案示意图
+![img.png](实现方案示意图.png)
+
+    Server Agent 在启动时，会将 Agent 信息与端点信息注册到 Nacos 中；Client Agent 监听并获取 Agent 信息，同时发现对应 Agent 的端点列表；在需要访问 Server Agent 时，会通过负载均衡选取 Agent 端点，并采用 A2A 协议进行通信。
+    基于Spring AI Alibaba + Nacos 的分布式 Multi-Agent
+
+## Spring AI Aliababa和AgentScope-Java总体对比
+    这两个都是阿里巴巴开源的AI框架
+![img.png](总体对比.png)
+![img.png](如何选型.png)
+
+
 ## LangChain简介
     LangChain就等价于数据库领域的JDBC
     
