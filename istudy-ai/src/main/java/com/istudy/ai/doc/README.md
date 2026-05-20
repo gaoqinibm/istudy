@@ -54,6 +54,8 @@
 ![img.png](总体对比.png)
 ![img.png](如何选型.png)
 
+## Multi-agent 扩展应用场景
+![img.png](扩展应用场景.png)
 
 ## LangChain简介
     LangChain就等价于数据库领域的JDBC
