@@ -43,7 +43,6 @@
         <module>istudy-mybatis</module>
         <module>istudy-mysql</module>
         <module>istudy-nacos</module>
-        <module>istudy-netty</module>
         <module>istudy-other</module>
         <module>istudy-presto</module>
         <module>istudy-pulsar</module>
