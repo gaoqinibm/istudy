@@ -40,7 +40,6 @@
         <module>istudy-k8s</module>
         <module>istudy-kafka</module>
         <module>istudy-kudu</module>
-        <module>istudy-mongodb</module>
         <module>istudy-mybatis</module>
         <module>istudy-mysql</module>
         <module>istudy-nacos</module>
