@@ -215,7 +215,8 @@
 ## 元数据管理
     Atlas - 开源的数据治理和元数据管理平台
     Apache Atlas
-    Apache Atlas是Hadoop社区为解决Hadoop生态系统的元数据治理问题而产生的开源项目，它为Hadoop集群提供了包括数据分类、集中策略引擎、数据血缘、安全和生命周期管理在内的元数据治理核心能力。官方插件支持HBase、Hive、Sqoop、Storm、Kafka、Falcon组件。
+    Apache Atlas是Hadoop社区为解决Hadoop生态系统的元数据治理问题而产生的开源项目，它为Hadoop集群提供了包括数据分类、集中策略引擎、
+    数据血缘、安全和生命周期管理在内的元数据治理核心能力。官方插件支持HBase、Hive、Sqoop、Storm、Kafka、Falcon组件。
     Hook在运行时采集血缘数据，发送到Kafka。Atlas消费Kafka数据，将关系写到图数据库JanusGraph，并提供REST API。
     其中Hive Hook支持表和列级别血缘，Spark需要使用GitHub的hortonworks-spark/spark-atlas-connector，不支持列级别，Presto则不支持。
 ![Alt text](../doc/Hive_Hook.jpg)
@@ -251,6 +252,16 @@
     数据统计法
     数据挖掘法
     数据质量框架法
+
+## 实时数据质量体系
+    核心思路是：在数据入湖/入库的过程中，嵌入轻量级的规则校验，并建立闭环的监控与告警。
+    将质量规则转化为流计算任务（如Flink SQL），在数据写入目标存储（如Kafka、Doris）之前完成校验。
+    将脏数据隔离到一个特殊的“死信队列”或“异常表”中，避免污染下游核心业务。
+    Flink + 规则引擎 + 消息队列(Kafka)
+
+    策略：使用 Flink 进行清洗过滤，将好数据和坏数据分流写入。
+    好数据 -> Hudi / Iceberg 实时表。
+    坏数据 -> HDFS 错误日志目录（用于后续离线分析）。
 
 ## 数据管理软件
 ### 元数据管理
