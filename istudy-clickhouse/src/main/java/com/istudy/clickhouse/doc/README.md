@@ -96,6 +96,19 @@
     ReplicatedMergeTree：如果你的应用场景是一个分布式系统，并且需要数据冗余和高可用性，
     那么你应该选择ReplicatedMergeTree。它虽然会有一定的性能开销，但提供了更高的数据安全性和可靠性。
 
+### ReplacingMergeTree和ReplicatedMergeTree区别及使用场景
+    ReplacingMergeTree 解决“数据去重/更新”问题（逻辑层面）
+    ReplicatedMergeTree 解决“数据高可用/容错”问题（物理层面）
+    ReplicatedReplacingMergeTree 既要高可用，又要自动去重（比如多源同步的实时数仓）
+![img.png](核心区别.png)
+![img.png](使用场景.png)
+
+    总结
+    需要去重 → 用 ReplacingMergeTree（单机或副本都行）
+    需要高可用 → 用 ReplicatedMergeTree（无去重逻辑）
+    两者都要 → 用 ReplicatedReplacingMergeTree（生产环境最常见）
+    如果你的场景是分布式生产环境且需要处理重复插入的更新类数据（如CDC同步、状态数据），默认选 ReplicatedReplacingMergeTree 一般不会错。
+
 ### clickhouse数据操作
     增加可以使用insert;
     不能修改,也不能指定删除;
@@ -182,7 +195,8 @@
 ### shared nothing架构
     Shared nothing(SN)架构（shared nothing architecture）是一种分布式计算架构。这种架构中的每一个节点（node）都是独立、自给的，而且整个系统中没有单点竞争。
     在一个纯Shared Nothing系统中，通过简单地增加一些廉价的计算机做为系统的节点却可以获取几乎无限的扩展。
-    Shared nothing系统通常需要将他的数据分布在多个节点的不同数据库中（不同的计算机处理不同的用户和查询）或者要求每个节点通过使用某些协调协议来保留它自己的应用程序数据备份 ，这通常被成为数据库Sharding。
+    Shared nothing系统通常需要将他的数据分布在多个节点的不同数据库中（不同的计算机处理不同的用户和查询）或者要求每个节点通过使用某些协调协议
+    来保留它自己的应用程序数据备份 ，这通常被成为数据库Sharding。
 
 ### 数据库架构设计的三种模式：share nothing , share everything , share disk
     Shared Everthting:一般是针对单个主机，完全透明共享CPU/MEMORY/IO，并行处理能力是最差的，典型的代表SQLServer
