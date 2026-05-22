@@ -57,6 +57,15 @@
 ## Multi-agent 扩展应用场景
 ![img.png](扩展应用场景.png)
 
+    智能客服系统-监督
+    Supervisor Agent├── Technical Support Agent (技术问题)├── Billing Agent (账单问题)└── Return Agent (退货问题)
+   
+    数据分析工作流-顺序执行模式
+    Sequential Agent├── Data Collection Agent (数据收集)├── Data Cleaning Agent (数据清洗)├── Analysis Agent (数据分析)└── Report Agent (报告生成)
+   
+    研究助手-并行
+    Parallel Agent├── Web Research Agent (网络搜索)├── Paper Research Agent (论文检索)└── Database Agent (数据库查询)
+
 ## LangChain简介
     LangChain就等价于数据库领域的JDBC
     
