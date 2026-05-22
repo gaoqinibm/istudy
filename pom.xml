@@ -23,7 +23,6 @@
         <module>istudy-cloud</module>
         <module>istudy-common</module>
         <module>istudy-datax</module>
-        <module>istudy-docker</module>
         <module>istudy-doris</module>
         <module>istudy-druid</module>
         <module>istudy-dubbo</module>
