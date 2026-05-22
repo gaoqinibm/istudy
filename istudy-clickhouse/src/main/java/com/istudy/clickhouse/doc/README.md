@@ -103,6 +103,13 @@
 ![img.png](核心区别.png)
 ![img.png](使用场景.png)
 
+    -- 单机去重表
+    ENGINE = ReplacingMergeTree(version_column)
+    
+    -- 多副本高可用去重表（生产推荐）
+    ENGINE = ReplicatedReplacingMergeTree('/clickhouse/tables/{shard}/my_table', '{replica}', version_column)
+    既能在多副本间自动同步数据（高可用），又能在合并时自动清理重复行（逻辑去重）。
+
     总结
     需要去重 → 用 ReplacingMergeTree（单机或副本都行）
     需要高可用 → 用 ReplicatedMergeTree（无去重逻辑）
