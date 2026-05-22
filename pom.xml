@@ -48,7 +48,6 @@
         <module>istudy-pulsar</module>
         <module>istudy-rabbitmq</module>
         <module>istudy-redis</module>
-        <module>istudy-rocketmq</module>
         <module>istudy-spark</module>
         <module>istudy-spring</module>
         <module>istudy-springboot</module>
