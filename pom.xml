@@ -40,13 +40,13 @@
         <module>istudy-k8s</module>
         <module>istudy-kafka</module>
         <module>istudy-kudu</module>
+        <module>istudy-model</module>
         <module>istudy-mybatis</module>
         <module>istudy-mysql</module>
         <module>istudy-nacos</module>
         <module>istudy-other</module>
         <module>istudy-presto</module>
         <module>istudy-pulsar</module>
-        <module>istudy-rabbitmq</module>
         <module>istudy-redis</module>
         <module>istudy-spark</module>
         <module>istudy-spring</module>
