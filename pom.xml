@@ -35,7 +35,6 @@
         <module>istudy-hive</module>
         <module>istudy-hudi</module>
         <module>istudy-iceberg</module>
-        <module>istudy-impala</module>
         <module>istudy-java-base</module>
         <module>istudy-jvm</module>
         <module>istudy-k8s</module>
