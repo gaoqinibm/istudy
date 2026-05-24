@@ -26,6 +26,17 @@
 
 ## AI目前能做的开源项目：RAG、智能体、知识库、智能问数
 
+## NL2SQL 核心引擎
+Schema召回(向量检索) → SQL生成(大模型推理) → 校验与执行(自愈循环)
+
+Schema 智能召回核心流程：自然语言 → Schema 向量检索 → 语义匹配 → 召回排序
+实现要点：
+![img.png](nl2sql实现要点.png)
+实现
+首选 Spring AI Alibaba NL2SQL(spring-ai-alibaba-starter-nl2sql)
+1. 初始化 Schema 到向量库(启动时调用一次，或在表结构变更后重新调用)
+2. 执行 NL2SQL 查询
+
 ## Multi-Agent(多智能体系统)
     多 Agent 系统(Multi-Agent System)就是让多个 AI Agent 各自负责一块,通过分工和协作,完成一个单 Agent 啃不动的复杂任务。
     多 Agent = 设计出一套"谁负责什么、谁向谁汇报、谁能调用谁" 的协作结构,然后让多个 Agent 在这个结构里运转
@@ -266,7 +277,6 @@
     Ollama 适合 50人以下团队或PoC（概念验证）阶段，快速启动且资源占用低；
     vLLM是200人以上企业生产环境首选，尤其在金融、客服等需高并发的场景。
     Ollama 是「快速上手的实验利器」，vLLM 是「企业级服务的生产引擎」
-
 
 ## 向量检索：语义匹配，靠 Embedding
     它的思路是这样的：
