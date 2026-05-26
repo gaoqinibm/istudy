@@ -47,3 +47,15 @@
     Unsloth Studio（性能最强）
 
 ## 优化模型推理性能
+Harness和Prompt，Context关系
+• Prompt Engineering：你对模型说什么（写实习生的任务书）
+• Context Engineering：模型能看到什么（给实习生准备资料）
+• Harness Engineering：实习生在了解哪些信息的情况下干活、有哪些权限、什么时候 review、谁能拍板上线
+
+Hermes Agent 看板是一个多智能体任务编排系统，本质是一个持久化的 SQLite 任务队列 + 调度器。
+核心思路:
+不是一个 agent 干所有事，而是把大任务拆成小任务，分派给不同的「专业 agent 角色」，各司其职、串并行执行,搭建完以后就是以下的流程:
+![img.png](核心思路.png)
+
+
+## 驾驭工程（Harness Engineering）
