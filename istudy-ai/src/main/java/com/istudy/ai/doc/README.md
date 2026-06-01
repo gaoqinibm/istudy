@@ -202,6 +202,8 @@ ReAct 的正确姿势不是让模型自由发挥，而是：
 
 ## Multi-Agent系统（MAS）-多智能体
 ![img.png](agent核心交互流程.png)
+![img.png](企业级Agent总体架构设计.png)
+![img.png](端到端请求链路.png)
 
 ## 基于 Apache Doris Data Agent 智能体平台全面架构如下图所示：
 ![Alt text](../doc/智能体架构图.png)
