@@ -484,12 +484,28 @@
     上传 PDF/DOCX → 解析抽字段 → AI 扫风险 → 分级路由 → 人工确认 → 出报告
 
 ## 多 agent 意图识别
-    核心路由分发器（通用方式）:通过直接调用 ChatModel 并配置 Function Calling 实现，非常直观(原理:调用DashScope大模型做意图类型识别,采用路由调用不同 agent)
+    核心路由分发器（通用方式）:通过直接调用 ChatModel 并配置 Function Calling 实现，非常直观(原理:调用DashScope大模型做意图类型识别,采用路由调用不同 agent)大模型通过调用 select_agent 函数来输出意图识别结果，函数的参数就是结构化的意图信息。
     监督者模式（企业级推荐）:对于复杂场景，推荐使用 Spring AI Alibaba 框架提供的监督者模式。它将子 Agent 封装为“工具”，由主 Agent 动态决策调用顺序，
                          支持多步推理(用户输入 → Supervisor Agent → 分析并选择工具 → 子Agent执行 → 返回结果给Supervisor → 继续决策或结束)
+    LlmRoutingAgent,这是 Spring AI Alibaba 官方推荐的路由模式。LlmRoutingAgent 完全依赖子 Agent 的 description 字段来判断何时路由。描述必须包含关键词和能力边界：
+    .description("股票数据分析师，负责查询股票价格、涨跌幅、成交量等金融市场数据")
 
+    LlmRoutingAgent 工作原理
+![img.png](LlmRoutingAgent 的核心执行流程.png)
 
+    Function Calling 意图识别的核心流程：
+![img.png](Function Calling 意图识别的核心流程.png)
 
+    多Agent意图识别核心方式对比
+![img.png](方式对比概览.png)
+
+    Function Calling 路由（推荐）
+    核心原理：利用大模型的Function Calling能力，将意图识别转化为一个函数调用过程。模型不直接输出分类文本，而是调用一个“路由函数”，其参数就是结构化的意图识别结果（如agent_id、intent、confidence等）
+
+    监督者模式（Supervisor Pattern）
+    核心原理：引入一个中心化的监督者Agent，它不直接处理业务，而是将各个子Agent封装为“工具”。监督者基于LLM自主决策，动态判断调用哪个子Agent、调用顺序以及如何处理异常
+![img.png](监督者模式流程.png)
+![img.png](核心代码示例.png)
 
 
 
