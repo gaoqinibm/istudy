@@ -523,4 +523,20 @@
     2.数据质量 Agent和告警根因 Agent (数据质量Agent负责异常检测与自动修复，告警根因Agent负责故障诊断与处置建议)
     3.ETL 编排 Agent
 
+    Agent原生数据平台五层架构图
+![img.png](Agent原生数据平台五层架构图.png)
+    
+    Agent编排层：
+    意图识别Agent 解析自然语言，识别查询意图、筛选条件和聚合维度(成熟,可落地)
+    SQL生成Agent 基于语义层和元数据，生成可执行的SQL(成熟,可落地)
+    数据质量Agent 监控数据质量异常，自动触发告警和修复(成熟,可落地)
+    ETL调度Agent 智能调度数据同步任务，处理依赖和异常(中等,探索中)
+    指标管理Agent 维护指标定义，检测口径冲突，自动对齐
 
+## Agent、MCP、Tools、Skill、Harness 是什么关系
+    Harness	Agent的运行时环境与编排框架，管理Agent的生命周期、记忆、工具注册等
+    Agent	拥有自主决策能力的执行者，根据目标选择调用哪些Tools/Skill
+    Skill	一组预定义的多步流程，本质是Tools的组合 + 固定逻辑
+    Tools	Agent可以调用的原子能力，如查询数据库、发送邮件、调用API
+    MCP	    连接Agent与Tools的标准化协议，解决“工具太多、接入太乱”的问题
+![img.png](分层架构图.png)
