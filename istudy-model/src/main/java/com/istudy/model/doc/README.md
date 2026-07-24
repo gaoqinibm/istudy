@@ -97,3 +97,60 @@
 
 ## 模型蒸馏（Model Distillation）
     大语言模型蒸馏（LLM Distillation）是一种旨在复制大型语言模型性能的技术，同时显著减少其规模和计算需求。
+
+## vLLM优化
+### vLLM部署的优势 
+    vLLM是一个专门为LLM推理优化的服务框架，它的核心优势在于：
+    PagedAttention技术：像操作系统管理内存一样管理KV缓存
+    连续批处理：动态合并多个请求，提高GPU利用率
+    高效的内存管理：减少内存碎片，支持更大的批处理
+    
+    PagedAttention（分页注意力机制）
+    PagedAttention借鉴了操作系统的分页思想，将KV缓存分成固定大小的块（block），每个块可以独立分配和释放。
+
+### GPU 性能没问题，模型 也训练得不错，但 token 吞吐量就是上不去？问题多半出在 KV-cache 上
+    推理速度成为瓶颈
+    --max-num-seqs（最大序列数）控制vLLM同时处理的最大请求数量
+    --block-size（块大小）控制内存分配的基本单位。在vLLM的PagedAttention机制中，KV缓存被分成固定大小的"块"。块大小就像仓库的货架格子——格子太大浪费空间，格子太小管理起来麻烦。
+
+### 内存占用计算 
+    vLLM的内存占用大致可以这样估算：
+    总内存 ≈ (max-num-seqs × 平均序列长度 ÷ block-size) × block-size × 每token内存
+    从这个公式可以看出：
+    
+    block-size影响内存分配的粒度
+    max-num-seqs限制并发请求数，间接影响总内存需求
+    两个参数共同决定了GPU内存的使用效率
+    性能权衡
+    
+    提高max-num-seqs可以增加并发能力，但需要更多内存
+    调整block-size可以优化内存利用率，但可能影响调度效率
+    最优配置需要在吞吐量、延迟、内存使用之间找到平衡点
+
+### 常见问题与解决方案
+    问题1：服务启动失败，提示内存不足 OutOfMemoryError: CUDA out of memory
+    解决方案：
+    降低--max-num-seqs值
+    检查是否有其他进程占用GPU内存
+    考虑使用--gpu-memory-utilization参数限制vLLM内存使用比例
+    
+    问题2：高并发时请求被拒绝
+    429 Too Many Requests
+    解决方案：
+    增加--max-num-seqs值
+    在前端添加请求队列或限流机制
+    考虑水平扩展，部署多个实例
+    
+    问题3：响应时间波动大 有时很快（50ms），有时很慢（500ms+）
+    解决方案：
+    检查--block-size是否合适，不匹配的块大小会导致内存碎片
+    监控请求长度分布，如果变化大可能需要动态调整
+    考虑启用vLLM的--enable-chunked-prefill选项
+
+### 场景的配置建议
+    多GPU，高并发需求
+    推荐配置：--max-num-seqs 256 --block-size 16（单卡）
+    重点：最大化吞吐，可以考虑多实例部署
+
+## GPU算力 RTX 4090、A100、H100、H200
+![img.png](算力核心参数对比.png)
