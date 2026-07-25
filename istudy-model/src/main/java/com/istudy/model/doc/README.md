@@ -108,7 +108,7 @@
     PagedAttention（分页注意力机制）
     PagedAttention借鉴了操作系统的分页思想，将KV缓存分成固定大小的块（block），每个块可以独立分配和释放。
 
-### GPU 性能没问题，模型 也训练得不错，但 token 吞吐量就是上不去？问题多半出在 KV-cache 上
+### GPU 性能没问题，模型也训练得不错，但 token 吞吐量就是上不去？问题多半出在 KV-cache 上
     推理速度成为瓶颈
     --max-num-seqs（最大序列数）控制vLLM同时处理的最大请求数量
     --block-size（块大小）控制内存分配的基本单位。在vLLM的PagedAttention机制中，KV缓存被分成固定大小的"块"。块大小就像仓库的货架格子——格子太大浪费空间，格子太小管理起来麻烦。
