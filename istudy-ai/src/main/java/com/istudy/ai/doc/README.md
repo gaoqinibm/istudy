@@ -563,11 +563,11 @@
     指标管理Agent 维护指标定义，检测口径冲突，自动对齐
 
 ## Agent、MCP、Tools、Skill、Harness 是什么关系
-    Harness	Agent的运行时环境与编排框架，管理Agent的生命周期、记忆、工具注册等
-    Agent	拥有自主决策能力的执行者，根据目标选择调用哪些Tools/Skill
-    Skill	一组预定义的多步流程，本质是Tools的组合 + 固定逻辑
-    Tools	Agent可以调用的原子能力，如查询数据库、发送邮件、调用API
-    MCP	    连接Agent与Tools的标准化协议，解决“工具太多、接入太乱”的问题
+    Harness  Agent的运行时环境与编排框架，管理Agent的生命周期、记忆、工具注册等
+    Agent    拥有自主决策能力的执行者，根据目标选择调用哪些Tools/Skill
+    Skill    一组预定义的多步流程，本质是Tools的组合 + 固定逻辑
+    Tools    Agent可以调用的原子能力，如查询数据库、发送邮件、调用API
+    MCP      连接Agent与Tools的标准化协议，解决“工具太多、接入太乱”的问题
 ![img.png](分层架构图.png)
 
 ## Agent驱动智能数仓的完整Agent组成
